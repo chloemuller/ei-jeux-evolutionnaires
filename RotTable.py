@@ -1,5 +1,6 @@
 import mathutils
 import math
+import numpy
 
 class RotTable:
     """Represents the rotation table"""
@@ -24,17 +25,16 @@ class RotTable:
         }
 
     def __init__(self):
-        self.__Rot_Table = {}
+        self.Rot_Table = {}
         for dinucleotide in RotTable.__ORIGINAL_ROT_TABLE:
-            self.__Rot_Table[dinucleotide] = RotTable.__ORIGINAL_ROT_TABLE[dinucleotide][:3]
-            self.alea()
+            self.Rot_Table[dinucleotide] = RotTable.__ORIGINAL_ROT_TABLE[dinucleotide][:3]
+        self.alea()
 
     
     def alea(self):
         for dinucleotide in RotTable.__ORIGINAL_ROT_TABLE:
             for i in range(2):
-                self.__Rot_Table[dinucleotide][i] += numpy.random.uniform(low = -RotTable.__ORIGINAL_ROT_TABLE[dinucleotide][i+3], high= RotTable.__ORIGINAL_ROT_TABLE[dinucleotide][i+3]) 
-
+                self.Rot_Table[dinucleotide][i] += numpy.random.uniform(low = -RotTable.__ORIGINAL_ROT_TABLE[dinucleotide][i+3], high= RotTable.__ORIGINAL_ROT_TABLE[dinucleotide][i+3]) 
 
 
     ###################
@@ -58,5 +58,5 @@ class RotTable:
 
     ###################
 
-    table1 = RotTable()
-    print(table1.__Rot_Table["AA"])
+table1 = RotTable()
+print(table1.Rot_Table["AA"])
