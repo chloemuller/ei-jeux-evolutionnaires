@@ -26,20 +26,20 @@ class RotTable:
 
     __CORRESPONDANCE = {\
         "AA": "TT",\
-        "AC": "TG",\
-        "AG": "TC",\
-        "AT": "TA",\
-        "CA": "GT",\
+        "AC": "GT",\
+        "AG": "CT",\
+        "AT": "AT",\
+        "CA": "TG",\
         "CC": "GG",\
-        "CG": "GC",\
-        "CT": "GA",\
-        "GA": "CT",\
-        "GC": "CG",\
+        "CG": "CG",\
+        "CT": "AG",\
+        "GA": "TC",\
+        "GC": "GC",\
         "GG": "CC",\
-        "GT": "CA",\
-        "TA": "AT",\
-        "TC": "AG",\
-        "TG": "AC",\
+        "GT": "AC",\
+        "TA": "TA",\
+        "TC": "GA",\
+        "TG": "CA",\
         "TT": "AA",\
         }
 
