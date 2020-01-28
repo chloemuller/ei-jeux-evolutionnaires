@@ -64,8 +64,7 @@ class Population:
                 print("meilleur, individu: ", meilleur.score, individu.score)
                 meilleur = individu
         newself = [meilleur]
-        # print("\n \n \nmeilleur", meilleur.table.rot_table, "\n \nscore", meilleur.score)
-                           
+        vu=set()                        
         t=randrange(0,self.n)
         m=randrange(0,self.n)
         non_vu = [i for i in range(0, self.n)]          
@@ -155,7 +154,7 @@ class Population:
             p = (self.n)//2
         vieille_taille = self.n
         selection(p)
-        newself = list(self.indiv)
+        newself = [element for element in self.indiv]       
         while len(newself)<vieille_taille:
             m=randrange(0,self.n)
             t=randrange(0,self.n)
@@ -164,9 +163,11 @@ class Population:
             couple_enfant = enfant(x,y)
             for child in couple_enfant :
                 child.mutation(proba_mutation)
+                child.evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
             newself.append(couple_enfant[0])
             newself.append(couple_enfant[1])
         self = self.modifier_population(newself)
+
 
 def afficher(popu):
     for individu in popu.indiv :
@@ -185,8 +186,6 @@ def test():
     afficher(popu)
 
 #test()
-
-
 
     
 

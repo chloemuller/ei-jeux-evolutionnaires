@@ -1,7 +1,7 @@
 from RotTable import RotTable
 from Traj3D import Traj3D
 import numpy as np
-from math import sqrt
+from math import sqrt, inf
 from random import random
 
 P1 = 0.015
@@ -10,27 +10,36 @@ class Individu():
 
     def __init__(self, table):
         self.table = table
-        self.score = None
+        self.score = self.evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
     
     def evaluate(self, brin):
         traj = Traj3D()
-        traj.compute(brin, self.table)
+
+        numb_ajout = 3
+
+        fisrt_seq = brin[0:numb_ajout]
+        last_seq = brin[-numb_ajout:]
+
+        traj.compute(last_seq + brin + fisrt_seq, self.table)
         traj_array = np.array(traj.getTraj())
+        list_distance = []
 
-        first_nucleotide = traj_array[0, 0:3]
-        last_nucleotide = traj_array[-1, 0:3]
-        distance = sqrt(sum((first_nucleotide - last_nucleotide) ** 2))
+        for i in range(numb_ajout):
+                first_nuc_coordonate = traj_array[numb_ajout+i, 0:3]
+                first_nuc_coordonate_compute = traj_array[-(numb_ajout-i), 0:3]
+                
+                last_nuc_coordonate = traj_array[-(2*numb_ajout-i), 0:3]
+                last_nuc_coordonate_compute = traj_array[i, 0:3]
 
-        first_name = brin[0]
-        last_name = brin[-1]
+                distance_first_nuc = np.linalg.norm(first_nuc_coordonate - first_nuc_coordonate_compute, ord=2)
+                distance_last_nuc = np.linalg.norm(last_nuc_coordonate - last_nuc_coordonate_compute, ord=2)
 
-        #rot_computed = self.table.rot_table[last_name+first_name]
-        #rot_traj = first_nucleotide - last_nucleotide
-        # print(rot_traj)
-        # print(rot_computed)
-        #diff_angle = sum(abs(rot_computed - rot_traj))
+                list_distance += [distance_first_nuc, distance_last_nuc]
 
-        self.score = 1/distance
+
+        self.score = 1/max(list_distance)
+
+        return 1/distance
 
 
     def mutation(self, proba = P1):
@@ -58,7 +67,7 @@ class Individu():
 # print(test.score)
 
 
-qqun=Individu(RotTable())
-qqun.table.rot_table={'AA': [35.576558502141, 7.433901511509349, -154], 'AC': [33.22048222654215, 5.25191751302917, 143], 'AG': [26.446029097301288, 6.052240462237622, -2], 'AT': [30.47045254036881, 1.333716025628036, 0], 'CA': [34.00734209585039, 33.70710613604862, -64], 'CC': [33.61019622767888, 3.713127032109607, -57], 'CG': [29.664061041382677, 6.725155507162601, 0], 'CT': [26.446029097301288, 6.052240462237622, 2], 'GA': [36.655773481637176, 10.45337581740701, 120], 'GC': [42.26984493493484, 3.5310453395352823, 180], 'GG': [33.61019622767888, 3.713127032109607, -57], 'GT': [33.22048222654215, 5.25191751302917, 143], 'TA': [36.951508786388914, -2.5174751178033303, 0], 'TC': [36.655773481637176, 10.45337581740701, -120], 'TG': [34.00734209585039, 33.70710613604862, -64], 'TT': [35.576558502141, 7.433901511509349, -154]}
-qqun.evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
-print(qqun.score)
+# qqun=Individu(RotTable())
+# qqun.table.rot_table={'AA': [35.576558502141, 7.433901511509349, -154], 'AC': [33.22048222654215, 5.25191751302917, 143], 'AG': [26.446029097301288, 6.052240462237622, -2], 'AT': [30.47045254036881, 1.333716025628036, 0], 'CA': [34.00734209585039, 33.70710613604862, -64], 'CC': [33.61019622767888, 3.713127032109607, -57], 'CG': [29.664061041382677, 6.725155507162601, 0], 'CT': [26.446029097301288, 6.052240462237622, 2], 'GA': [36.655773481637176, 10.45337581740701, 120], 'GC': [42.26984493493484, 3.5310453395352823, 180], 'GG': [33.61019622767888, 3.713127032109607, -57], 'GT': [33.22048222654215, 5.25191751302917, 143], 'TA': [36.951508786388914, -2.5174751178033303, 0], 'TC': [36.655773481637176, 10.45337581740701, -120], 'TG': [34.00734209585039, 33.70710613604862, -64], 'TT': [35.576558502141, 7.433901511509349, -154]}
+# qqun.evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
+# print(qqun.score)
