@@ -15,6 +15,22 @@ class Population:
         self.indiv = liste_individus
         return self
 
+    def selection_p_best(self,p=self.n//2):
+        def tri_rapide_aux(tableau,debut,fin):
+            if debut < fin-1:
+                positionPivot=partitionner(tableau,debut,fin)
+                tri_rapide_aux(tableau,debut,positionPivot)
+                tri_rapide_aux(tableau,positionPivot+1,fin)
+            
+        def tri_rapide(tableau):
+            tri_rapide_aux(tableau,0,len(tableau))
+        
+        liste_individus=self.indiv
+        tri_rapide(liste_individus)
+        individus_selectionnes = [element for element in liste_individus[:p]]
+        self = self.modifier_population(individus_selectionnes)
+
+
     def selection_duel_pondere(self,p=None): 
         if p == None :
             p = (self.n)//2
@@ -68,6 +84,8 @@ class Population:
         for i in range(0, len(newself)):
             print(newself[i].score)
         self = self.modifier_population(newself)
+
+
 
     def selection_par_rang(self,p = None):
         if p == None :
