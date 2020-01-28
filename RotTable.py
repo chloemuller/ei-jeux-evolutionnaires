@@ -40,8 +40,10 @@ class RotTable:
     ###################
     # WRITING METHODS #
     ###################
-#table = RotTable()
-#table.__Rot_Table["AA"] --> [35.62, 7.2, -154]
+
+#tableenfant = RotTable()
+
+#tableenfant.__Rot_Table["AA"] =  tableparent1.__Rot_Table["AA"] or tableparent2.__Rot_Table["AA"]
 
     ###################
     # READING METHODS #
