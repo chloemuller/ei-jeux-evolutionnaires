@@ -3,6 +3,7 @@ from random import *
 from individu import Individu
 from RotTable import RotTable
 from croisement import croisement_un_point, croisement_deux_points
+import copy
 
 class Population:
     def __init__(self,n):
@@ -63,8 +64,8 @@ class Population:
             p = (self.n)//2
         meilleur = self.indiv[0]
         for individu in self.indiv :
-            if meilleur.score < individu.score:
-                print("meilleur, individu: ", meilleur.score, individu.score)
+            if meilleur.score > individu.score:
+                #print("meilleur, individu: ", meilleur.score, individu.score)
                 meilleur = individu
         newself = [meilleur]
         vu=set()                        
@@ -79,12 +80,10 @@ class Population:
             
             x=self.indiv[m]
             y=self.indiv[t]
-            if x.score>=y.score:
+            if x.score<=y.score:
                 newself.append(x)
             else:
                 newself.append(y)
-        for i in range(0, len(newself)):
-            print(newself[i].score)
         self = self.modifier_population(newself)
 
 
@@ -161,8 +160,8 @@ class Population:
         while len(newself)<vieille_taille:
             m=randrange(0,self.n)
             t=randrange(0,self.n)
-            x=newself[m]
-            y=newself[t]
+            x=copy.deepcopy(newself[m])
+            y=copy.deepcopy(newself[t])
             couple_enfant = enfant(x,y)
             for child in couple_enfant :
                 lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
