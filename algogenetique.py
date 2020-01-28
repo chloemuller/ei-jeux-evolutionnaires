@@ -32,7 +32,7 @@ def main(N,tmax,pmutation, proportion,brin="plasmid_8k.fasta"):
     return(best)
 
 
-main(100,100,0.1,50)
+main(100,100,0,50)
 
 
 
