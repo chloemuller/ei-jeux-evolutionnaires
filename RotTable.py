@@ -36,6 +36,8 @@ class RotTable:
             for i in range(2):
                 self.rot_table[dinucleotide][i] += numpy.random.uniform(low = -RotTable.__ORIGINAL_ROT_TABLE[dinucleotide][i+3], high= RotTable.__ORIGINAL_ROT_TABLE[dinucleotide][i+3]) 
 
+    def orta(self):
+        return self.__ORIGINAL_ROT_TABLE
 
     ###################
     # WRITING METHODS #
@@ -59,4 +61,5 @@ class RotTable:
     ###################
 
 table1 = RotTable()
-print(table1.rot_table["AA"])
+print(table1.orta())
+
