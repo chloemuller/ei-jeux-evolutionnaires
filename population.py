@@ -156,7 +156,7 @@ def test():
     print("\n REPRODUCTION \n")
     afficher(popu)
 
-test()
+# test()
 
 
 
