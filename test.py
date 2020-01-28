@@ -6,35 +6,48 @@ class Population:
         self.n = n
     
     def selection_duel_pondere(self,p=(self.n)//2): 
-        n=self.n
-        newself=[]                           #méthode des duels pondérée: si x=10 et y=1, y a une chance sur 11 de passer
-        while len(self)>p:
-            m=random.randrange(0,len(self))
-            t=random.randrange(0,len(self))
+        newself=[] 
+        vu={} 
+        m=None
+        t=None                         #méthode des duels pondérée: si x=10 et y=1, y a une chance sur 11 de passer
+        while len(newself)<p:
+            while m in vu:
+                m=random.randrange(0,len(self))
+            while t in vu:
+                t=random.randrange(0,len(self))
             x=self[m]
             y=self[t]
+            vu.add(t)
+            vu.add(m)
             p=uniform(0,1)
             if p>x.score/(x.score+y.score):
                 newself.append(y)
             else:
                 newself.append(x)
+            
         return(newself)
     
     def selection_duel(self,p=(self.n)//2):
-        n=self.n
-        newself=[]                           #méthode des duels pondérée: si x=10 et y=1, y a une chance sur 11 de passer
-        while len(self)>p:
-            m=random.randrange(0,len(self))
-            t=random.randrange(0,len(self))
+        newself=[]
+        vu={}                           
+        t=None  
+        m=None                       
+        while len(newself)<p:
+            while m in vu:
+                m=random.randrange(0,len(self))
+            while t in vu:
+                t=random.randrange(0,len(self))
             x=self[m]
             y=self[t]
+            vu.add(t)
+            vu.add(m)
             if x.score<=y.score:
                 newself.append(x)
             else:
                 newself.append(y)
         return(newself)
 
-    def selection_par_rang(self, p):
+    def selection_par_rang(self, p=(self.n)//2):
         liste_individus = self.indiv
         n = self.n
         
@@ -80,6 +93,19 @@ class Population:
             return self
         
         self = modifier_population(self, individus_selectionnes)
+        
+    def selection_proportionelle(self,p=(self.n)//2):
+        newself=[]
+        somme=0
+        for indiv in self:
+            somme=somme+indiv.score
+        while len(newself)<p:
+            m=m=random.randrange(0,len(self))
+            x=self[m]
+            p=uniform(0,1)
+            if p<=x.score/somme:
+                newself.append(x)
+        return(newself)
 
     def reproduction(self,selection=selection_duel,enfant=mixage,p=n//2):
         newself=selection(self,p)
@@ -91,7 +117,6 @@ class Population:
             newself.append(enfant(x,y))
         return(newself)
 
-print([random.randrange(1,10) for i in range(5)])
 
 
 
