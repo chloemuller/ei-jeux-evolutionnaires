@@ -10,7 +10,7 @@ class Individu():
 
     def __init__(self, table):
         self.table = table
-        self.score = None
+        self.score = self.evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
     
     def evaluate(self, brin):
         traj = Traj3D()
@@ -38,6 +38,8 @@ class Individu():
 
 
         self.score = 1/max(list_distance)
+
+        return 1/distance
 
 
     def mutation(self, proba = P1):
