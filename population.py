@@ -15,7 +15,10 @@ class Population:
         self.indiv = liste_individus
         return self
 
-    def selection_p_best(self,p=self.n//2):
+    def selection_p_best(self,p=None):
+        if p==None:
+            p=(self.n)//2
+            
         def tri_rapide_aux(tableau,debut,fin):
             if debut < fin-1:
                 positionPivot=partitionner(tableau,debut,fin)
