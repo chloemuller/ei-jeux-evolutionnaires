@@ -3,11 +3,12 @@ import math
 import numpy
 import RotTable
 from individu import Individu
-from population import Population
+from population import Population, afficher
 import croisement
 from Traj3D import *
 from random import random
 import matplotlib.pyplot as plt
+
 
 
 def main(N,tmax,pmutation, proportion,brin="plasmid_8k.fasta"):
@@ -15,7 +16,9 @@ def main(N,tmax,pmutation, proportion,brin="plasmid_8k.fasta"):
 	brin = ''.join(lineList[1:])'''
     L=[]
     People=Population(N)
+    afficher(People)
     for i in range(tmax):
+        print("\n \n NOUVELLE GENERATION \n \n")
         max=0
         best=None
         for individu in People.indiv:

@@ -142,6 +142,7 @@ def afficher(popu):
     for individu in popu.indiv :
         print("\n individu \n")
         print(individu.table.rot_table)
+        print ("score", individu.score)
     
 def test():
     popu = Population(4)
