@@ -2,15 +2,15 @@ import mathutils
 import math
 import numpy
 import RotTable
-import individu
-import population
+from individu import Individu
+from population import Population
 import croisement
 from Traj3D import *
 from random import random
 import matplotlib.pyplot as plt
 
 
-def main(N,tmax,pmutation, proportion, selection="selection_duel", croisement="croisement_un_point",brin="plasmid_8k.fasta"):
+def main(N,tmax,pmutation, proportion,brin="plasmid_8k.fasta"):
     '''lineList = [line.rstrip('\n') for line in open(brin)]
 	brin = ''.join(lineList[1:])'''
     L=[]
@@ -20,18 +20,20 @@ def main(N,tmax,pmutation, proportion, selection="selection_duel", croisement="c
         best=None
         for individu in People.indiv:
             individu.evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
-        People.reproduction(selection,p = proportion,enfant=croisement)
+        People.reproduction(p = proportion)
         for individu in People.indiv:
             individu.mutation(pmutation)
         for individu in People.indiv:
+            individu.evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
             if individu.score>max:
                 best=individu
                 max=individu.score
-            L.append(max)
-        plt.plot([i for i in range(tmax)], L)
-        plt.show()
+        L.append(max)
+        print(L)
+    plt.plot([i for i in range(tmax)], L)
+    plt.show()
     return(individu)
 
 
-main(4,10,0.015,2)
+main(100,50,0.015,2)
 
