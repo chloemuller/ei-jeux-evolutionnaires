@@ -29,11 +29,13 @@ def main(N,tmax,pmutation, proportion,brin="plasmid_8k.fasta"):
                 best=individu
                 max=individu.score
         L.append(max)
-        print(L)
+        #print(L)
     plt.plot([i for i in range(tmax)], L)
     plt.show()
-    return(individu)
+    return(best)
 
 
-main(100,50,0.015,2)
+main(100,50,0.015,50)
+
+
 

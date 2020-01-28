@@ -75,13 +75,13 @@ class RotTable:
     ###################
 
     def getTwist(self, dinucleotide):
-        return RotTable.__ORIGINAL_ROT_TABLE[dinucleotide][0]
+        return self.rot_table[dinucleotide][0]
 
     def getWedge(self, dinucleotide):
-        return RotTable.__ORIGINAL_ROT_TABLE[dinucleotide][1]
+        return self.rot_table[dinucleotide][1]
 
     def getDirection(self, dinucleotide):
-        return RotTable.__ORIGINAL_ROT_TABLE[dinucleotide][2]
+        return self.rot_table[dinucleotide][2]
 
     ###################
 
