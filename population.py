@@ -24,9 +24,9 @@ class Population:
         t=None                         #méthode des duels pondérée: si x=10 et y=1, y a une chance sur 11 de passer
         while len(newself)<p:
             while m in vu:
-                m=randrange(0,len(self))
+                m=randrange(0,self.n)
             while t in vu:
-                t=randrange(0,len(self))
+                t=randrange(0,self.n)
             x=self.indiv[m]
             y=self.indiv[t]
             vu.add(t)
@@ -48,9 +48,11 @@ class Population:
         m=None                       
         while len(newself)<p:
             while m in vu:
-                m=randrange(0,len(self))
+                print("self.n", self.n)
+                m=randrange(0,self.n)
             while t in vu:
-                t=randrange(0,len(self))
+                print("self.n", self.n)
+                t=randrange(0,self.n)
             x=self.indiv[m]
             y=self.indiv[t]
             vu.add(t)
@@ -113,44 +115,48 @@ class Population:
         for indiv in self.indiv:
             somme=somme+indiv.score
         while len(newself)<p:
-            m=m=randrange(0,len(self))
+            m=m=randrange(0, self.n)
             x=self.indiv[m]
             p=random(0,1)
             if p<=x.score/somme:
                 newself.append(x)
         self = self.modifier_population(newself)
 
-    def reproduction(self,selection=selection_duel,enfant=croisement_un_point, p = None):
+    def reproduction(self,selection=None,enfant=croisement_un_point, p = None):
+        if selection == None :
+            selection = self.selection_duel
         if p == None :
             p = (self.n)//2
-        newself=selection(self,p)
-        while len(newself)<self.n:
-            m=randrange(0,len(newself))
-            t=randrange(0,len(newself))
+        vieille_taille = self.n
+        selection(p)
+        newself = list(self.indiv)
+        while len(newself)<vieille_taille:
+            m=randrange(0,self.n)
+            t=randrange(0,self.n)
             x=newself[m]
             y=newself[t]
             newself.append(enfant(x,y))
         self = self.modifier_population(newself)
 
-# def afficher(popu):
-#     for individu in popu.indiv :
-#         print("\n individu \n")
-#         print(individu.table.rot_table)
+def afficher(popu):
+    for individu in popu.indiv :
+        print("\n individu \n")
+        print(individu.table.rot_table)
     
-# def test():
-#     popu = Population(4)
-#     print("\n POPULATION INITIALE \n")
-#     for individu in popu.indiv :
-#         individu.evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
-#     afficher(popu)
-#     popu.selection_par_rang()
-#     print("\n SELECTION PAR RANG \n")
-#     afficher(popu)
-#     popu.indiv = popu.reproduction()
-#     print("\n REPRODUCTION \n")
-#     afficher(popu)
+def test():
+    popu = Population(4)
+    print("\n POPULATION INITIALE \n")
+    for individu in popu.indiv :
+        individu.evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
+    afficher(popu)
+    # popu.selection_par_rang()
+    # print("\n SELECTION PAR RANG \n")
+    # afficher(popu)
+    popu.reproduction()
+    print("\n REPRODUCTION \n")
+    afficher(popu)
 
-# test()
+test()
 
 
 
