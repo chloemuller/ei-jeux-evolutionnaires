@@ -43,7 +43,7 @@ class Individu():
                 if tir < proba :
                     table_rotations[doublet][coord] =np.random.uniform(low = self.table.orta()[doublet][coord] - self.table.orta()[doublet][coord + 3], high = self.table.orta()[doublet][coord] + self.table.orta()[doublet][coord + 3])
                     doublet2 = self.table.corr()[doublet]
-                    if coord = 0 or coord = 1 :
+                    if coord == 0 or coord == 1 :
                         table_rotations[doublet2][coord] = table_rotations[doublet][coord]
                     else :
                         #sur l'axe z il y a un moins
