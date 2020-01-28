@@ -24,7 +24,7 @@ class Individu():
         first_name = brin[0]
         last_name = brin[-1]
 
-        rot_computed = self.table.Rot_Table[last_name+first_name]
+        rot_computed = self.table.rot_table[last_name+first_name]
         rot_traj = first_nucleotide - last_nucleotide
         # print(rot_traj)
         # print(rot_computed)

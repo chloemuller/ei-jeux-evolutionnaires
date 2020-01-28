@@ -8,7 +8,12 @@ class Population:
     def __init__(self,n):
         self.indiv=[Individu(RotTable()) for k in range (n)]
         self.n = n
-    
+
+    def modifier_population(self, liste_individus):
+        """Fonction qui renvoie une nouvelle instance de population a partir d'une liste d'individus"""
+        self.n = len(liste_individus)
+        self.indiv = liste_individus
+        return self
 
     def selection_duel_pondere(self,p=None): 
         if p == None :
@@ -32,7 +37,7 @@ class Population:
             else:
                 newself.append(x)
             
-        return(newself)
+        self = self.modifier_population(newself)
     
     def selection_duel(self,p=None):
         if p == None :
@@ -54,7 +59,7 @@ class Population:
                 newself.append(x)
             else:
                 newself.append(y)
-        return(newself)
+        self = self.modifier_population(newself)
 
     def selection_par_rang(self,p = None):
         if p == None :
@@ -97,13 +102,8 @@ class Population:
             #on doit prendre l'individu avec le jème score 
             # print("individus selectionés", individus_selectionnes)
             individus_selectionnes.append(liste_individus[j-1])
-            
-        def modifier_population(self, liste_individus):
-            self.n = len(liste_individus)
-            self.indiv = liste_individus
-            return self
         
-        self = modifier_population(self, individus_selectionnes)
+        self = self.modifier_population(individus_selectionnes)
         
     def selection_proportionelle(self,p= None):
         if p == None :
@@ -118,7 +118,7 @@ class Population:
             p=random(0,1)
             if p<=x.score/somme:
                 newself.append(x)
-        return(newself)
+        self = self.modifier_population(newself)
 
     def reproduction(self,selection=selection_duel,enfant=croisement_un_point, p = None):
         if p == None :
@@ -130,7 +130,7 @@ class Population:
             x=newself[m]
             y=newself[t]
             newself.append(enfant(x,y))
-        return(newself)
+        self = self.modifier_population(newself)
 
 # def afficher(popu):
 #     for individu in popu.indiv :
@@ -140,11 +140,13 @@ class Population:
 # def test():
 #     popu = Population(4)
 #     print("\n POPULATION INITIALE \n")
+#     for individu in popu.indiv :
+#         individu.evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
 #     afficher(popu)
-#     popu.selection_duel()
-#     print("\n SELECTION DUEL \n")
+#     popu.selection_par_rang()
+#     print("\n SELECTION PAR RANG \n")
 #     afficher(popu)
-#     popu.reproduction
+#     popu.indiv = popu.reproduction()
 #     print("\n REPRODUCTION \n")
 #     afficher(popu)
 
