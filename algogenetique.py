@@ -15,6 +15,10 @@ def main(N,tmax,pmutation, proportion,brin="plasmid_8k.fasta"):
 	brin = ''.join(lineList[1:])'''
     L=[]
     People=Population(N)
+    print(People.indiv[0].table.rot_table)
+    print(People.indiv[1].table.rot_table)
+    print(People.indiv[2].table.rot_table)
+    print(People.indiv[3].table.rot_table)
     for i in range(tmax):
         max=0
         best=None
@@ -29,7 +33,6 @@ def main(N,tmax,pmutation, proportion,brin="plasmid_8k.fasta"):
                 best=individu
                 max=individu.score
         L.append(max)
-        print(L)
     plt.plot([i for i in range(tmax)], L)
     plt.show()
     return(individu)
