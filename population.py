@@ -58,7 +58,7 @@ class Population:
             echanger(tableau,debut,randint(debut,fin-1)) 
             partition=debut
             for i in range(debut+1,fin):
-                if tableau[i] < tableau[debut]:
+                #if tableau[i] < tableau[debut]:
                 if tableau[i].score<tableau[debut].score: 
                     partition+=1 
                     echanger(tableau,i,partition) 
