@@ -25,22 +25,22 @@ class RotTable:
         }
 
     __CORRESPONDANCE = {\
-        "AA": "TT"
-        "AC": "TG"
-        "AG": "TC"
-        "AT": "TA"
-        "CA": "GT"
-        "CC": "GG"
-        "CG": "GC"
-        "CT": "GA"
-        "GA": "CT"
-        "GC": "CG"
-        "GG": "CC"
-        "GT": "CA"
-        "TA": "AT"
-        "TC": "AG"
-        "TG": "AC"
-        "TT": "AA"
+        "AA": "TT",\
+        "AC": "TG",\
+        "AG": "TC",\
+        "AT": "TA",\
+        "CA": "GT",\
+        "CC": "GG",\
+        "CG": "GC",\
+        "CT": "GA",\
+        "GA": "CT",\
+        "GC": "CG",\
+        "GG": "CC",\
+        "GT": "CA",\
+        "TA": "AT",\
+        "TC": "AG",\
+        "TG": "AC",\
+        "TT": "AA",\
         }
 
     # get the angles in each axis (x, y, z), considering the deviation

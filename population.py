@@ -2,7 +2,7 @@ import random
 from random import random, randint, randrange
 from individu import Individu
 from RotTable import RotTable
-from croisement import * 
+from croisement import croisement_un_point, croisement_deux_points
 
 class Population:
     def __init__(self,n):
@@ -149,10 +149,7 @@ def test():
     for individu in popu.indiv :
         individu.evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
     afficher(popu)
-    # popu.selection_par_rang()
-    # print("\n SELECTION PAR RANG \n")
-    # afficher(popu)
-    popu.reproduction(selection = popu.selection_proportionelle)
+    popu.reproduction(selection = popu.selection_duel)
     print("\n REPRODUCTION \n")
     afficher(popu)
 
