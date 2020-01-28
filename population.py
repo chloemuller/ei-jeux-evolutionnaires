@@ -31,7 +31,7 @@ class Population:
             y=self.indiv[t]
             vu.add(t)
             vu.add(m)
-            p=random(0,1)
+            p=random()
             if p>x.score/(x.score+y.score):
                 newself.append(y)
             else:
@@ -115,7 +115,7 @@ class Population:
         while len(newself)<p:
             m=m=randrange(0, self.n)
             x=self.indiv[m]
-            p=random(0,1)
+            p=random()
             if p<=x.score/somme:
                 newself.append(x)
         self = self.modifier_population(newself)
@@ -152,11 +152,11 @@ def test():
     # popu.selection_par_rang()
     # print("\n SELECTION PAR RANG \n")
     # afficher(popu)
-    popu.reproduction()
+    popu.reproduction(selection = popu.selection_proportionelle)
     print("\n REPRODUCTION \n")
     afficher(popu)
 
-# test()
+test()
 
 
 
