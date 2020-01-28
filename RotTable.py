@@ -40,8 +40,8 @@ class RotTable:
     ###################
     # WRITING METHODS #
     ###################
-    #table = RotTable()
-    #table.rot_table["AA"] --> [35.62, 7.2, -154]
+#table = RotTable()
+#table.rot_table["AA"] --> [35.62, 7.2, -154]
 
     ###################
     # READING METHODS #
