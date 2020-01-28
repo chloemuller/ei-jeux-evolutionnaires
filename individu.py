@@ -9,8 +9,10 @@ P1 = 0.015
 class Individu():
 
     def __init__(self, table):
+        lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
+        brin = ''.join(lineList[1:])
         self.table = table
-        self.score = self.evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
+        self.score = self.evaluate(brin)
     
     def evaluate(self, brin):
         traj = Traj3D()
@@ -39,7 +41,7 @@ class Individu():
 
         self.score = 1/max(list_distance)
 
-        return 1/distance
+        return 1/max(list_distance)
 
 
     def mutation(self, proba = P1):

@@ -32,7 +32,8 @@ def main(N,tmax,pmutation, proportion,brin="plasmid_8k.fasta"):
     return(best)
 
 
-main(100,100,0.1,50)
+#main(100,100,0.01,50)
 
-
-
+lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
+brin = ''.join(lineList[1:])
+print(brin)

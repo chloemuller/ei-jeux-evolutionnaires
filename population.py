@@ -162,8 +162,10 @@ class Population:
             y=newself[t]
             couple_enfant = enfant(x,y)
             for child in couple_enfant :
+                lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
+                brin = ''.join(lineList[1:])
                 child.mutation(proba_mutation)
-                child.evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
+                child.evaluate(brin)
             newself.append(couple_enfant[0])
             newself.append(couple_enfant[1])
         self = self.modifier_population(newself)
