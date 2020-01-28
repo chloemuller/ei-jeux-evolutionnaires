@@ -25,23 +25,23 @@ class RotTable:
         }
 
     def __init__(self):
-        self.Rot_Table = {}
+        self.rot_table = {}
         for dinucleotide in RotTable.__ORIGINAL_ROT_TABLE:
-            self.Rot_Table[dinucleotide] = RotTable.__ORIGINAL_ROT_TABLE[dinucleotide][:3]
+            self.rot_table[dinucleotide] = RotTable.__ORIGINAL_ROT_TABLE[dinucleotide][:3]
         self.alea()
 
     
     def alea(self):
         for dinucleotide in RotTable.__ORIGINAL_ROT_TABLE:
             for i in range(2):
-                self.Rot_Table[dinucleotide][i] += numpy.random.uniform(low = -RotTable.__ORIGINAL_ROT_TABLE[dinucleotide][i+3], high= RotTable.__ORIGINAL_ROT_TABLE[dinucleotide][i+3]) 
+                self.rot_table[dinucleotide][i] += numpy.random.uniform(low = -RotTable.__ORIGINAL_ROT_TABLE[dinucleotide][i+3], high= RotTable.__ORIGINAL_ROT_TABLE[dinucleotide][i+3]) 
 
 
     ###################
     # WRITING METHODS #
     ###################
 #table = RotTable()
-#table.__Rot_Table["AA"] --> [35.62, 7.2, -154]
+#table.rot_table["AA"] --> [35.62, 7.2, -154]
 
     ###################
     # READING METHODS #
@@ -59,4 +59,4 @@ class RotTable:
     ###################
 
 table1 = RotTable()
-print(table1.Rot_Table["AA"])
+print(table1.rot_table["AA"])
