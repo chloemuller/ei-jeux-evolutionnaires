@@ -24,18 +24,21 @@ class RotTable:
         "TT": [35.62, 7.2, -154, 0.06, 0.6, 0]\
         }
 
+    # get the angles in each axis (x, y, z), considering the deviation
     def __init__(self):
         self.rot_table = {}
         for dinucleotide in RotTable.__ORIGINAL_ROT_TABLE:
             self.rot_table[dinucleotide] = RotTable.__ORIGINAL_ROT_TABLE[dinucleotide][:3]
         self.alea()
 
-    
+    # get a random deviation, considering the "limits" given in the last 3 columns
+    # of __ORIGINAL_ROT_TABLE
     def alea(self):
         for dinucleotide in RotTable.__ORIGINAL_ROT_TABLE:
             for i in range(2):
                 self.rot_table[dinucleotide][i] += numpy.random.uniform(low = -RotTable.__ORIGINAL_ROT_TABLE[dinucleotide][i+3], high= RotTable.__ORIGINAL_ROT_TABLE[dinucleotide][i+3]) 
 
+    # return __ORIGINAL_ROT_TABLE
     def orta(self):
         return self.__ORIGINAL_ROT_TABLE
 
