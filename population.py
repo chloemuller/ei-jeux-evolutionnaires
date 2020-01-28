@@ -20,8 +20,8 @@ class Population:
             p = (self.n)//2
         newself=[] 
         vu=set()
-        m=None
-        t=None                         #méthode des duels pondérée: si x=10 et y=1, y a une chance sur 11 de passer
+        m=randrange(0,self.n)
+        t=randrange(0,self.n)                   #méthode des duels pondérée: si x=10 et y=1, y a une chance sur 11 de passer
         while len(newself)<p:
             while m in vu:
                 m=randrange(0,self.n)
@@ -44,14 +44,12 @@ class Population:
             p = (self.n)//2
         newself=[]
         vu=set()                        
-        t=None  
-        m=None                       
+        t=randrange(0,self.n)
+        m=randrange(0,self.n)             
         while len(newself)<p:
             while m in vu:
-                print("self.n", self.n)
                 m=randrange(0,self.n)
             while t in vu:
-                print("self.n", self.n)
                 t=randrange(0,self.n)
             x=self.indiv[m]
             y=self.indiv[t]
@@ -135,7 +133,9 @@ class Population:
             t=randrange(0,self.n)
             x=newself[m]
             y=newself[t]
-            newself.append(enfant(x,y))
+            couple_enfant = enfant(x,y)
+            newself.append(couple_enfant[0])
+            newself.append(couple_enfant[1])
         self = self.modifier_population(newself)
 
 def afficher(popu):

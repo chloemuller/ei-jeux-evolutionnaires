@@ -1,5 +1,6 @@
 import numpy
 from RotTable import RotTable
+from individu import Individu
 
 ROT_TABLE = {\
         "AA": [35.62, 7.2, -154, 0.06, 0.6, 0],\
@@ -22,17 +23,17 @@ ROT_TABLE = {\
 
 
 def croisement_un_point(parent1, parent2):
-    enfant1 = RotTable()
-    enfant2 = RotTable()
+    enfant1 = Individu(RotTable())
+    enfant2 = Individu(RotTable())
     comp = 0
     point_crois= numpy.random.random_integers(0,16)
     for doublet in ROT_TABLE:
         if comp < point_crois:
-            enfant1.rot_table[doublet] = parent1.rot_table[doublet]
-            enfant2.rot_table[doublet] = parent2.rot_table[doublet]
+            enfant1.table.rot_table[doublet] = parent1.table.rot_table[doublet]
+            enfant2.table.rot_table[doublet] = parent2.table.rot_table[doublet]
         else :
-            enfant1.rot_table[doublet] = parent2.rot_table[doublet]
-            enfant2.rot_table[doublet] = parent1.rot_table[doublet]
+            enfant1.table.rot_table[doublet] = parent2.table.rot_table[doublet]
+            enfant2.table.rot_table[doublet] = parent1.table.rot_table[doublet]
         comp += 1
     return enfant1, enfant2
 
