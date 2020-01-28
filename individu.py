@@ -26,13 +26,13 @@ class Individu():
         first_name = brin[0]
         last_name = brin[-1]
 
-        rot_computed = self.table.rot_table[last_name+first_name]
-        rot_traj = first_nucleotide - last_nucleotide
+        #rot_computed = self.table.rot_table[last_name+first_name]
+        #rot_traj = first_nucleotide - last_nucleotide
         # print(rot_traj)
         # print(rot_computed)
-        diff_angle = sum(abs(rot_computed - rot_traj))
+        #diff_angle = sum(abs(rot_computed - rot_traj))
 
-        self.score = 1/(distance + diff_angle)
+        self.score = 1/(distance)
 
 
     def mutation(self, proba = P1):
