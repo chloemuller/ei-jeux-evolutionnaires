@@ -1,7 +1,7 @@
 from RotTable import RotTable
 from Traj3D import *
 import numpy as np
-from math import sqrt
+from math import sqrt, inf
 
 class Individu():
 
@@ -12,20 +12,30 @@ class Individu():
     def evaluate(self, brin):
         traj = Traj3D()
 
-        fisrt_nuc = brin[0]
-        last_nu = brin[-1]
+        numb_ajout = 3
 
-        traj.compute(brin + fisrt_nuc, self.table)
+        fisrt_seq = brin[0:numb_ajout]
+        last_seq = brin[-numb_ajout:]
+
+        traj.compute(last_seq + brin + fisrt_seq, self.table)
         traj_array = np.array(traj.getTraj())
 
-        first_nuc_coordonate = traj_array[0, 0:3]
-        last_nuc_coordonate = traj_array[-2, 0:3]
+        list_distance = []
 
-        test = np.linalg.norm(first_nuc_coordonate - last_nuc_coordonate, ord=2)
-        distance = sqrt(sum((first_nuc_coordonate - last_nuc_coordonate) ** 2))
-        diff_ideal_distance = abs(3.38 - distance)
-        diff_ideal_distance_2 = abs(3.38 - test)
-        self.score = (1/(diff_ideal_distance ), 1/diff_ideal_distance_2)
+        for i in range(numb_ajout):
+                first_nuc_coordonate = traj_array[numb_ajout+i, 0:3]
+                first_nuc_coordonate_compute = traj_array[-(numb_ajout-i), 0:3]
+                
+                last_nuc_coordonate = traj_array[-(2*numb_ajout-i), 0:3]
+                last_nuc_coordonate_compute = traj_array[i, 0:3]
+
+                distance_first_nuc = np.linalg.norm(first_nuc_coordonate - first_nuc_coordonate_compute, ord=2)
+                distance_last_nuc = np.linalg.norm(last_nuc_coordonate - last_nuc_coordonate_compute, ord=2)
+
+                list_distance += [distance_first_nuc, distance_last_nuc]
+
+
+        self.score = 1/max(list_distance)
         
     
     def mutation(self):
