@@ -49,6 +49,7 @@ class Individu():
                         #sur l'axe z il y a un moins
                         table_rotations[doublet2][coord] = - table_rotations[doublet][coord]
 
+
 # individu1 = Individu(RotTable())
 # print(individu1.table.rot_table)
 # individu1.mutation()
