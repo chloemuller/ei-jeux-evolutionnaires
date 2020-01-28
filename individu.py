@@ -13,21 +13,15 @@ class Individu():
         traj = Traj3D()
         traj.compute(brin, self.table)
         traj_array = np.array(traj.getTraj())
-
+        print(traj_array)
         first_nucleotide = traj_array[0, 0:3]
         last_nucleotide = traj_array[-1, 0:3]
+        print(first_nucleotide)
+        print(last_nucleotide)
         distance = sqrt(sum((first_nucleotide - last_nucleotide) ** 2))
+        diff_ideal_distance = abs(3.38 - distance)
 
-        first_name = brin[0]
-        last_name = brin[-1]
-
-        rot_computed = self.table.Rot_Table[last_name+first_name]
-        rot_traj = first_nucleotide - last_nucleotide
-        print(rot_traj)
-        print(rot_computed)
-        diff_angle = sum(abs(rot_computed - rot_traj))
-
-        self.score = 1/(distance + diff_angle)
+        self.score = 1/(diff_ideal_distance )
         
     
     def mutation(self):
@@ -37,4 +31,5 @@ class Individu():
 table = RotTable()
 test = Individu(table)
 test.evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
+print(table.rot_table)
 print(test.score)
