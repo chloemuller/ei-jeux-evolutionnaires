@@ -16,30 +16,24 @@ def main(N,tmax,pmutation, proportion,brin="plasmid_8k.fasta"):
 	brin = ''.join(lineList[1:])'''
     L=[]
     People=Population(N)
-    # afficher(People)
     for i in range(tmax):
-        print("\n \n NOUVELLE GENERATION \n \n")
+        print(i)
         max=0
         best=None
-        for individu in People.indiv:
-            individu.evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
         People.reproduction(p = proportion, proba_mutation= pmutation)
-        # for individu in People.indiv:
-        #     individu.mutation(pmutation)
         for individu in People.indiv:
-            individu.evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
             if individu.score>max:
                 best=individu
                 max=individu.score
-        afficher(People)
+
         L.append(max)
-        #print(L)
+
     plt.plot([i for i in range(tmax)], L)
     plt.show()
     return(best)
 
 
-main(10,50,0,5)
+main(100,100,0.1,50)
 
 
 
