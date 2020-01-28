@@ -1,4 +1,5 @@
 import numpy
+from RotTable import RotTable
 
 ROT_TABLE = {\
         "AA": [35.62, 7.2, -154, 0.06, 0.6, 0],\
