@@ -21,7 +21,7 @@ class RotTable:
         "TA": [36, 0.9, 0, 1.1, 2, 0],\
         "TC": [36.9, 5.3, -120, 0.9, 6, 0],\
         "TG": [34.5, 3.5, 64, 0.9, 34, 0],\
-        "TT": [35.62, 7.2, -154, 0.06, 0.6, 0]\
+        "TT": [35.62, 7.2, 154, 0.06, 0.6, 0]\
         }
 
     # get the angles in each axis (x, y, z), considering the deviation
@@ -63,7 +63,7 @@ class RotTable:
 
     ###################
 
-# table1 = RotTable()
-# print(table1.orta())
+table1 = RotTable()
+print(table1.orta())
 
-# print(table1.rot_table["AA"])
+print(table1.rot_table["AA"])
