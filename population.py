@@ -42,7 +42,12 @@ class Population:
     def selection_duel(self,p=None):
         if p == None :
             p = (self.n)//2
-        newself=[]
+        meilleur = self.indiv[0]
+        for individu in self.indiv :
+            if meilleur.score < individu.score:
+                meilleur = individu
+        newself = [meilleur]
+        print("\n \n \nmeilleur", meilleur.table.rot_table, "\n \nscore", meilleur.score)
         vu=set()                        
         t=randrange(0,self.n)
         m=randrange(0,self.n)             
@@ -120,7 +125,9 @@ class Population:
                 newself.append(x)
         self = self.modifier_population(newself)
 
-    def reproduction(self,selection=None,enfant=croisement_un_point, p = None):
+    def reproduction(self,proba_mutation = None, selection=None,enfant=croisement_un_point, p = None):
+        if proba_mutation == None :
+            proba_mutation = 0.001
         if selection == None :
             selection = self.selection_duel
         if p == None :
@@ -134,6 +141,8 @@ class Population:
             x=newself[m]
             y=newself[t]
             couple_enfant = enfant(x,y)
+            for child in couple_enfant :
+                child.mutation(proba_mutation)
             newself.append(couple_enfant[0])
             newself.append(couple_enfant[1])
         self = self.modifier_population(newself)
