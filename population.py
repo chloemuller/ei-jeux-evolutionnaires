@@ -1,5 +1,5 @@
-import random
-from random import random, randint, randrange
+
+from random import *
 from individu import Individu
 from RotTable import RotTable
 from croisement import croisement_un_point, croisement_deux_points
@@ -45,25 +45,28 @@ class Population:
         meilleur = self.indiv[0]
         for individu in self.indiv :
             if meilleur.score < individu.score:
+                print("meilleur, individu: ", meilleur.score, individu.score)
                 meilleur = individu
         newself = [meilleur]
-        print("\n \n \nmeilleur", meilleur.table.rot_table, "\n \nscore", meilleur.score)
-        vu=set()                        
+        # print("\n \n \nmeilleur", meilleur.table.rot_table, "\n \nscore", meilleur.score)
+                           
         t=randrange(0,self.n)
-        m=randrange(0,self.n)             
+        m=randrange(0,self.n)
+        non_vu = [i for i in range(0, self.n)]          
         while len(newself)<p:
-            while m in vu:
-                m=randrange(0,self.n)
-            while t in vu:
-                t=randrange(0,self.n)
+            m = choice(non_vu)
+            non_vu.remove(m)
+            t = choice(non_vu)
+            non_vu.remove(t)
+            
             x=self.indiv[m]
             y=self.indiv[t]
-            vu.add(t)
-            vu.add(m)
             if x.score>=y.score:
                 newself.append(x)
             else:
                 newself.append(y)
+        for i in range(0, len(newself)):
+            print(newself[i].score)
         self = self.modifier_population(newself)
 
     def selection_par_rang(self,p = None):
