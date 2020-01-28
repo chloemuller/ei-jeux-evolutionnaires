@@ -25,7 +25,6 @@ def main(N,tmax,pmutation, proportion,brin="plasmid_8k.fasta"):
             if individu.score>max:
                 best=individu
                 max=individu.score
-
         L.append(max)
 
     plt.plot([i for i in range(tmax)], L)

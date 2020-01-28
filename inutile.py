@@ -31,7 +31,7 @@ class table_rotation(rotation):
         self.dict = {doublet : rotation(doublet) for doublet in ORIGINAL_ROT_TABLE}
 
 table1 = table_rotation()
-print(table1.dict["AA"].x)
+# print(table1.dict["AA"].x)
 
 #table1.dict --> {'AA': <__main__.rotation object at 0x000001A722E1BAC8>, 'AC': <__main__.rotation object at 0x000001A722E1BB00>, 'AG': <__main__.rotation object at 0x000001A729A66A58>, 'AT': <__main__.rotation object at 0x000001A729A66A20>, 'CA': <__main__.rotation object at 0x000001A729A669E8>, 'CC': <__main__.rotation object at 0x000001A729A66A90>, 'CG': <__main__.rotation object at 0x000001A729A66B00>, 'CT': <__main__.rotation object at 0x000001A729A66B70>, 'GA': <__main__.rotation object at 0x000001A729B88D68>, 'GC': <__main__.rotation object at 0x000001A729B88DA0>, 'GG': <__main__.rotation object at 0x000001A729B88DD8>, 'GT': <__main__.rotation object at 0x000001A729B88E10>, 'TA': <__main__.rotation object at 0x000001A729B88E48>, 'TC': <__main__.rotation object at 0x000001A729B88E80>, 'TG': <__main__.rotation object at 0x000001A729B88EB8>, 'TT': <__main__.rotation object at 0x000001A729B88EF0>}
 #table1.dict["AA"] ---> <__main__.rotation object at 0x000001A722E1BAC8> (qui est l'object rotation)
