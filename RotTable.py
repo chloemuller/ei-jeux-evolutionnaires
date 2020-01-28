@@ -101,4 +101,4 @@ class RotTable:
 
 table1 = RotTable()
 
-print(table1.rot_table)
+# print(table1.rot_table)

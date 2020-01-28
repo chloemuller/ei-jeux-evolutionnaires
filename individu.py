@@ -32,7 +32,7 @@ class Individu():
         # print(rot_computed)
         #diff_angle = sum(abs(rot_computed - rot_traj))
 
-        self.score = 1/(distance)
+        self.score = 1/distance
 
 
     def mutation(self, proba = P1):
