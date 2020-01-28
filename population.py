@@ -55,7 +55,7 @@ class Population:
             y=self.indiv[t]
             vu.add(t)
             vu.add(m)
-            if x.score<=y.score:
+            if x.score>=y.score:
                 newself.append(x)
             else:
                 newself.append(y)
