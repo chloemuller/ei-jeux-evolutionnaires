@@ -28,11 +28,11 @@ def croisement_un_point(parent1, parent2):
     point_crois= numpy.random.random_integers(0,16)
     for doublet in ROT_TABLE:
         if comp < point_crois:
-            enfant1.__ORIGINAL_ROT_TABLE[doublet] = parent1.__ORIGINAL_ROT_TABLE[doublet]
-            enfant2.__ORIGINAL_ROT_TABLE[doublet] = parent2.__ORIGINAL_ROT_TABLE[doublet]
+            enfant1.rot_table[doublet] = parent1.rot_table[doublet]
+            enfant2.rot_table[doublet] = parent2.rot_table[doublet]
         else :
-            enfant1.__ORIGINAL_ROT_TABLE[doublet] = parent2.__ORIGINAL_ROT_TABLE[doublet]
-            enfant2.__ORIGINAL_ROT_TABLE[doublet] = parent1.__ORIGINAL_ROT_TABLE[doublet]
+            enfant1.rot_table[doublet] = parent2.rot_table[doublet]
+            enfant2.rot_table[doublet] = parent1.rot_table[doublet]
         comp += 1
     return enfant1, enfant2
 
@@ -45,10 +45,10 @@ def croisement_deux_points(parent1, parent2):
     point_crois2= numpy.random.random_integers(0,16)
     for doublet in ROT_TABLE:
         if comp < min(point_crois1,point_crois2) or comp > max(point_crois1,point_crois2):
-            enfant1.__ORIGINAL_ROT_TABLE[doublet] = parent1.__ORIGINAL_ROT_TABLE[doublet]
-            enfant2.__ORIGINAL_ROT_TABLE[doublet] = parent2.__ORIGINAL_ROT_TABLE[doublet]
+            enfant1.rot_table[doublet] = parent1.rot_table[doublet]
+            enfant2.rot_table[doublet] = parent2.rot_table[doublet]
         else :
-            enfant1.__ORIGINAL_ROT_TABLE[doublet] = parent2.__ORIGINAL_ROT_TABLE[doublet]
-            enfant2.__ORIGINAL_ROT_TABLE[doublet] = parent1.__ORIGINAL_ROT_TABLE[doublet]
+            enfant1.rot_table[doublet] = parent2.rot_table[doublet]
+            enfant2.rot_table[doublet] = parent1.rot_table[doublet]
         comp += 1
     return enfant1, enfant2
