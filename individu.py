@@ -29,13 +29,12 @@ class Individu():
         last_seq = self.brin[-numb_ajout:]
 
         traj.compute(last_seq + self.brin + fisrt_seq, self.table)
-        traj_array = np.array(traj.getTraj())
+        traj_array = traj.getTraj()
 
         list_distance = []
 
-        begining = traj_array[0:2*numb_ajout, 0:3]
-        end = traj_array[-2*numb_ajout:, 0:3]
-
+        begining = np.array(traj_array[0:2*numb_ajout])
+        end = np.array(traj_array[-2*numb_ajout:])
         for i in range(numb_ajout):
 
                 nuc_coordonate_beg = begining[i]
@@ -116,10 +115,10 @@ class Individu():
 # print(individu1.table.rot_table)
 # individu1.mutation()
 
-#table = RotTable()
-#test = Individu(table)
-#test.evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
-#print(test.score)
+table = RotTable()
+test = Individu(table)
+test.evaluate()
+print(test.score)
 
 
 # qqun=Individu(RotTable())
