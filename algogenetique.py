@@ -34,7 +34,7 @@ def test_mutation():
     plt.figure()
     for i in range(10):
         print("\n \n", i)
-        main(100,100,i/10,50)
+        main(100,100,i/50,50)
     plt.legend()
     plt.xlabel("Nombre de générations")
     plt.ylabel("Score du meilleur individu")
