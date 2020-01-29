@@ -10,6 +10,7 @@ from random import random
 import matplotlib.pyplot as plt
 import time
 from copy import deepcopy
+import csv
 
 # def main(N,tmax,pmutation, proportion,brin="plasmid_8k.fasta"):
 #     '''lineList = [line.rstrip('\n') for line in open(brin)]
@@ -61,8 +62,8 @@ def main(N,tmax,pmutation, proportion, indice_selection, population_initiale, en
         L.append(mini)
 
     # plt.subplot(221)
-    liste_selections = ["selection_p_best", "selection_duel_pondere", "selection_duel", "selection_par_rang", "selection_proportionnelle"]
-    plt.plot([j for j in range(len(L))], L, label = liste_selections[indice_selection])
+    liste_selections = ["selection_p_best", "selection_duel_pondere", "selection_duel", "selection_par_rang"]
+    #plt.plot([j for j in range(len(L))], L, label = liste_selections[indice_selection])
     
 
     # plt.subplot(223)
@@ -103,7 +104,7 @@ def compare_mutation():
 
 
 def comparaison_selections(N,generation,mut,surv):
-    liste_selections = ["selection_p_best", "selection_duel_pondere", "selection_duel", "selection_par_rang", "selection_proportionnelle"]
+    liste_selections = ["selection_p_best", "selection_duel_pondere", "selection_par_rang", "selection_proportionnelle", "selection_duel"]
     liste_time = []
     plt.figure()
     People = Population(N)
@@ -113,16 +114,19 @@ def comparaison_selections(N,generation,mut,surv):
     #plt.hist(S2, range = (0,int(max(S2)+10)), bins = 20, color = 'blue')
     #plt.show()
     #plt.figure()
-    for i in range(5):
+    for i in range(3):
         print("\n", liste_selections[i], "\n")
         start_time = time.time()
         best = main(N, generation, mut, surv, i, deepcopy(People))[0]
-        liste_time.append((liste_selections[i], time.time() - start_time, best.score))
+        liste_time.append(",{},{},{},{},{},{},{},".format(liste_selections[i], time.time() - start_time, best.score,N,generation,mut,sur))
+    start_time = time.time()
+    best = main(N, generation, mut, surv/2, 4, deepcopy(People))[0]
+    liste_time.append(",{},{},{},{},{},{},{},".format(liste_selections[4], time.time() - start_time, best.score,N,generation,mut,sur))
     #plt.legend()
     #plt.xlabel("Nombre de générations")
     #plt.ylabel("Score du meilleur individu")
     #plt.title("Comparaison en fonction de la méthode de sélection")
-    print(numpy.array(liste_time))
+    return(liste_time)
     #plt.show()   
 
 # def comparaisons_croisements():
@@ -136,23 +140,27 @@ def comparaison_selections(N,generation,mut,surv):
 Nombre_indiv = [50,100,150,200,250,300,350,400,450,500,550,600,650,700]
 Nombre_generation = [10,20,30,40,50,60]
 Prob_mutation = [0.001,0.005,0.01,0.05,0.1]
-Sur=[0.1*k for k in range(1,4)]
+Sur=[0.1*k for k in range(1,10)]
 
 Produit = [(x,y,z) for x in Nombre_indiv for y in Nombre_generation for z in Prob_mutation]
 
-for indiv,nb_gen,mut in Produit:
-    for element in Sur:
-        sur = int(element * indiv)
-        comparaison_selections(indiv,nb_gen,mut,sur)
+with open("Comparaison.csv","w",newline='') as csvfichier:
+    spamwriter = csv.writer(csvfichier, delimiter=',')
+    spamwriter.writerow([",Type sélection,Temps d'exécution, Meilleur score, Nombre d'individu, Nombre génération, Mutation, Survivants,"])
+    for indiv,nb_gen,mut in Produit:
+        for element in Sur:
+            sur = int(element * indiv)
+            Result = comparaison_selections(indiv,nb_gen,mut,sur)
+            for res in Result:
+                print(res)
+                spamwriter.writerow([res])
 
 # [['selection_p_best' '22.637820959091187' '116.30569654472626']
 #  ['selection_duel_pondere' '22.636890172958374' '46.6242321955727']
 #  ['selection_duel' '22.21168804168701' '234.7640748029787']
 #  ['selection_par_rang' '22.180259227752686' '190.0163752068961']
-#  ['selection_proportionnelle' '22.329176902770996' '315.7030719673908']]
 
 # [['selection_p_best' '22.775274991989136' '106.89365704155766']
 #  ['selection_duel_pondere' '22.716803073883057' '284.11538487097084']
 #  ['selection_duel' '23.19036889076233' '155.83887357033393']
 #  ['selection_par_rang' '22.752396821975708' '118.6068497149259']
-#  ['selection_proportionnelle' '22.71982979774475' '151.80114914793427']]

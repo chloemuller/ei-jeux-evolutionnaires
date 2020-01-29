@@ -23,7 +23,7 @@ class Individu():
         
         traj = Traj3D()
 
-        numb_ajout = 6
+        numb_ajout = 100
 
         fisrt_seq = self.brin[0:numb_ajout]
         last_seq = self.brin[-numb_ajout:]
