@@ -8,7 +8,7 @@ import croisement
 from Traj3D import *
 from random import random
 import matplotlib.pyplot as plt
-import time 
+import time
 
 # def main(N,tmax,pmutation, proportion,brin="plasmid_8k.fasta"):
 #     '''lineList = [line.rstrip('\n') for line in open(brin)]
@@ -29,8 +29,8 @@ import time
 #     plt.plot([i for i in range(tmax)], L, label = str(pmutation))
 #     return(best)
 
-
 def main(N,tmax,pmutation, proportion):
+
     L=[]
     lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
     brin = ''.join(lineList[1:])
@@ -41,7 +41,7 @@ def main(N,tmax,pmutation, proportion):
         # S1.append(int(individu.score))
     # maximum=int(max(S1))
     for i in range(tmax):
-        print(i)
+        #print(i)
         mini=People.indiv[0].score
         best=People.indiv[0]
         People.reproduction(p = proportion, proba_mutation= pmutation)

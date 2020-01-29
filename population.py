@@ -15,7 +15,7 @@ class Population:
         self.n = len(liste_individus)
         self.indiv = liste_individus
         for i in range(0,self.n):
-            self.indiv[i].evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
+            self.indiv[i].evaluate()
 
         return self
 
@@ -68,7 +68,7 @@ class Population:
         meilleur = self.indiv[0]
         for individu in self.indiv :
             if meilleur.score > individu.score:
-                print("meilleur, individu: ", meilleur.score, individu.score)
+                #print("meilleur, individu: ", meilleur.score, individu.score)
                 meilleur = individu
         newself = [meilleur]
         vu=set()                        
@@ -83,7 +83,7 @@ class Population:
             
             x=self.indiv[m]
             y=self.indiv[t]
-            if x.score<y.score:
+            if x.score<=y.score:
                 newself.append(x)
             else:
                 newself.append(y)
@@ -170,7 +170,7 @@ class Population:
                 lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
                 brin = ''.join(lineList[1:])
                 child.mutation(proba_mutation)
-                child.evaluate(brin)
+                child.evaluate()
             newself.append(couple_enfant[0])
             newself.append(couple_enfant[1])
         self = self.modifier_population(newself)
@@ -186,7 +186,7 @@ def test():
     popu = Population(4)
     print("\n POPULATION INITIALE \n")
     for individu in popu.indiv :
-        individu.evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
+        individu.evaluate()
     afficher(popu)
     popu.reproduction(selection = popu.selection_duel)
     print("\n REPRODUCTION \n")
