@@ -1,4 +1,3 @@
-
 from random import *
 from individu import Individu
 from RotTable import RotTable
@@ -14,26 +13,13 @@ class Population:
         """Fonction qui renvoie une nouvelle instance de population a partir d'une liste d'individus"""
         self.n = len(liste_individus)
         self.indiv = liste_individus
-        for i in range(0,self.n):
-            self.indiv[i].evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
-
         return self
 
     def selection_p_best(self,p=None):
         if p==None:
             p=(self.n)//2
-            
-        def tri_rapide_aux(tableau,debut,fin):
-            if debut < fin-1:
-                positionPivot=partitionner(tableau,debut,fin)
-                tri_rapide_aux(tableau,debut,positionPivot)
-                tri_rapide_aux(tableau,positionPivot+1,fin)
-            
-        def tri_rapide(tableau):
-            tri_rapide_aux(tableau,0,len(tableau))
-        
         liste_individus=self.indiv
-        tri_rapide(liste_individus)
+        liste_individus.sort(key = lambda individu : individu.score)
         individus_selectionnes = [element for element in liste_individus[:p]]
         self = self.modifier_population(individus_selectionnes)
 
@@ -41,21 +27,23 @@ class Population:
     def selection_duel_pondere(self,p=None): 
         if p == None :
             p = (self.n)//2
-        newself=[] 
-        vu=set()
+        meilleur = self.indiv[0]
+        for individu in self.indiv :
+            if meilleur.score > individu.score:
+                meilleur = individu
+        newself=[meilleur] 
         m=randrange(0,self.n)
         t=randrange(0,self.n)                   #méthode des duels pondérée: si x=10 et y=1, y a une chance sur 11 de passer
+        non_vu = [i for i in range(0, self.n)]          
         while len(newself)<p:
-            while m in vu:
-                m=randrange(0,self.n)
-            while t in vu:
-                t=randrange(0,self.n)
+            m = choice(non_vu)
+            non_vu.remove(m)
+            t = choice(non_vu)
+            non_vu.remove(t)
             x=self.indiv[m]
             y=self.indiv[t]
-            vu.add(t)
-            vu.add(m)
             proba=random()
-            if proba>x.score/(x.score+y.score):
+            if proba<x.score/(x.score+y.score):
                 newself.append(y)
             else:
                 newself.append(x)
@@ -67,11 +55,9 @@ class Population:
             p = (self.n)//2
         meilleur = self.indiv[0]
         for individu in self.indiv :
-            if meilleur.score < individu.score:
-                print("meilleur, individu: ", meilleur.score, individu.score)
+            if meilleur.score > individu.score:
                 meilleur = individu
-        newself = [meilleur]
-        vu=set()                        
+        newself = [meilleur]                      
         t=randrange(0,self.n)
         m=randrange(0,self.n)
         non_vu = [i for i in range(0, self.n)]          
@@ -83,7 +69,7 @@ class Population:
             
             x=self.indiv[m]
             y=self.indiv[t]
-            if x.score>=y.score:
+            if x.score<y.score:
                 newself.append(x)
             else:
                 newself.append(y)
@@ -95,35 +81,11 @@ class Population:
         if p == None :
             p = (self.n)//2
         liste_individus = self.indiv
-        n = self.n
-        
-        def echanger(tableau, i, j):
-            tableau[i], tableau[j] = tableau[j], tableau[i]
-            
-        def partitionner(tableau,debut,fin):
-            echanger(tableau,debut,randint(debut,fin-1)) 
-            partition=debut
-            for i in range(debut+1,fin):
-                # if tableau[i] < tableau[debut]:
-                if tableau[i].score<tableau[debut].score: 
-                    partition+=1 
-                    echanger(tableau,i,partition) 
-            echanger(tableau,debut,partition) 
-            return partition
-            
-        def tri_rapide_aux(tableau,debut,fin):
-            if debut < fin-1:
-                positionPivot=partitionner(tableau,debut,fin)
-                tri_rapide_aux(tableau,debut,positionPivot)
-                tri_rapide_aux(tableau,positionPivot+1,fin)
-            
-        def tri_rapide(tableau):
-            tri_rapide_aux(tableau,0,len(tableau))
-            
-        tri_rapide(liste_individus)
-        individus_selectionnes = []
+        n = self.n        
+        liste_individus.sort(key = lambda individu : individu.score, reverse = True)
+        individus_selectionnes = [liste_individus[-1]]
     
-        for _ in range(p):
+        for _ in range(p-1):
             curseur = random()*n*(n+1)/2
             # print("curseur", curseur)
             j = 1
@@ -135,13 +97,17 @@ class Population:
         
         self = self.modifier_population(individus_selectionnes)
         
-    def selection_proportionelle(self,p= None):
+    def selection_proportionnelle(self,p= None):
         if p == None :
             p = (self.n)//2
-        newself=[]
+        meilleur = self.indiv[0]
+        for individu in self.indiv :
+            if meilleur.score > individu.score:
+                meilleur = individu
+        newself = [meilleur]      
         somme=0
         for indiv in self.indiv:
-            somme=somme+indiv.score
+            somme+=1/indiv.score
         while len(newself)<p:
             m=m=randrange(0, self.n)
             x=self.indiv[m]
@@ -151,10 +117,13 @@ class Population:
         self = self.modifier_population(newself)
 
     def reproduction(self,proba_mutation = None, selection=None,enfant=croisement_un_point, p = None):
+        liste_selections = [self.selection_p_best, self.selection_duel_pondere, self.selection_duel, self.selection_par_rang, self.selection_proportionnelle]
         if proba_mutation == None :
             proba_mutation = 0.001
         if selection == None :
             selection = self.selection_duel
+        else :
+            selection = liste_selections[selection]
         if p == None :
             p = (self.n)//2
         vieille_taille = self.n
@@ -167,8 +136,8 @@ class Population:
             y=copy.deepcopy(newself[t])
             couple_enfant = enfant(x,y)
             for child in couple_enfant :
-                child.mutation(proba_mutation)
-                child.evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
+                child.mutation_close_values(proba_mutation, number_of_mutations = 2)
+                child.evaluate()
             newself.append(couple_enfant[0])
             newself.append(couple_enfant[1])
         self = self.modifier_population(newself)
@@ -177,14 +146,14 @@ class Population:
 def afficher(popu):
     for individu in popu.indiv :
         print("\n individu \n")
-        print(individu.table.rot_table)
+        # print(individu.table.rot_table)
         print ("score", individu.score)
     
 def test():
     popu = Population(4)
     print("\n POPULATION INITIALE \n")
     for individu in popu.indiv :
-        individu.evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
+        individu.evaluate()
     afficher(popu)
     popu.reproduction(selection = popu.selection_duel)
     print("\n REPRODUCTION \n")
@@ -192,9 +161,21 @@ def test():
 
 #test()
 
+def test2():
+    popu = Population(10)
+    for individu in popu.indiv :
+        lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
+        brin = ''.join(lineList[1:])
+        individu.evaluate()
+    print("\n \n POPULATION INITIALE \n \n")
+    afficher(popu)
+    popu.selection_proportionnelle()
+    print("\n\nAPRES SELECTION \n\n")
+    afficher(popu)
     
 
 
+# test2()
 
 
 

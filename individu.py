@@ -2,49 +2,56 @@ from RotTable import RotTable
 from Traj3D import Traj3D
 import numpy as np
 from math import sqrt, inf
-from random import random
+from random import random, choice
 
 P1 = 0.015
 
 class Individu():
-
+    ''' Un individu est caractérisé par sa table de rotations (individu.table)'''
     def __init__(self, table):
+        lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
+        brin = ''.join(lineList[1:])
         self.table = table
-        self.score = self.evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
-    
-    def evaluate(self, brin):
+        lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
+        self.brin = ''.join(lineList[1:])
+        #self.brin = "AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA"
+        self.score = None
+
+    def evaluate(self):
+        ''' Evalue le score d'un individu sur un nombre numb_ajout de points'''
+        
+        
         traj = Traj3D()
 
-        numb_ajout = 3
+        numb_ajout = 100
 
-        fisrt_seq = brin[0:numb_ajout]
-        last_seq = brin[-numb_ajout:]
+        fisrt_seq = self.brin[0:numb_ajout]
+        last_seq = self.brin[-numb_ajout:]
 
-        traj.compute(last_seq + brin + fisrt_seq, self.table)
-        traj_array = np.array(traj.getTraj())
+        traj.compute(last_seq + self.brin + fisrt_seq, self.table)
+        traj_array = traj.getTraj()
+
         list_distance = []
 
+        begining = traj_array[0:2*numb_ajout]
+        end = traj_array[-2*numb_ajout:]
+
         for i in range(numb_ajout):
-                first_nuc_coordonate = traj_array[numb_ajout+i, 0:3]
-                first_nuc_coordonate_compute = traj_array[-(numb_ajout-i), 0:3]
-                
-                last_nuc_coordonate = traj_array[-(2*numb_ajout-i), 0:3]
-                last_nuc_coordonate_compute = traj_array[i, 0:3]
 
-                distance_first_nuc = np.linalg.norm(first_nuc_coordonate - first_nuc_coordonate_compute, ord=2)
-                distance_last_nuc = np.linalg.norm(last_nuc_coordonate - last_nuc_coordonate_compute, ord=2)
-
-                list_distance += [distance_first_nuc, distance_last_nuc]
+                nuc_coordonate_beg = begining[i]
+                nuc_coordonate_end = end[i]
+                distance_nuc = np.linalg.norm(nuc_coordonate_beg - nuc_coordonate_end, ord=2)
+                list_distance += [distance_nuc]
 
 
-        self.score = 1/max(list_distance)
+        self.score = max(list_distance)
 
-        return 1/max(list_distance)
+        #return max(list_distance)
 
 
     def mutation(self, proba = P1):
         table_rotations = self.table.rot_table
-        for doublet in table_rotations :
+        for doublet in sorted(table_rotations.keys()) :
             for coord in range(3):
                 tir = random()
                 if tir < proba :
@@ -56,6 +63,54 @@ class Individu():
                         #sur l'axe z il y a un moins
                         table_rotations[doublet2][coord] = - table_rotations[doublet][coord]
 
+    def mutation_with_numbers(self, proba = P1, number_of_mutations = 1):
+        table_rotations = self.table.rot_table
+        table_rotation_not_seen = [i for i in sorted(table_rotations.keys())]
+        table_rotation_not_seen = table_rotation_not_seen[:8]
+
+        tir = random()
+        if tir < proba :
+            for i in range(0,number_of_mutations):
+                
+                doublet = choice(table_rotation_not_seen)
+                table_rotation_not_seen.remove(doublet)
+
+                for coord in range(3):
+                    table_rotations[doublet][coord] =np.random.uniform(low = self.table.orta()[doublet][coord] - self.table.orta()[doublet][coord + 3], high = self.table.orta()[doublet][coord] + self.table.orta()[doublet][coord + 3])
+                    doublet2 = self.table.corr()[doublet]
+                    if coord == 0 or coord == 1 :
+                        table_rotations[doublet2][coord] = table_rotations[doublet][coord]
+                    else :
+                        #sur l'axe z il y a un moins
+                        table_rotations[doublet2][coord] = - table_rotations[doublet][coord]
+
+
+    def mutation_close_values(self, proba = P1, number_of_mutations = 1):
+        table_rotations = self.table.rot_table
+        table_rotation_not_seen = [i for i in sorted(table_rotations.keys())]
+        table_rotation_not_seen = table_rotation_not_seen[:8]
+
+        tir = random()
+        if tir < proba :
+            for i in range(0,number_of_mutations):
+
+                doublet = choice(table_rotation_not_seen)
+                table_rotation_not_seen.remove(doublet)
+
+                for coord in range(3):
+                    value = table_rotations[doublet][coord] + np.random.normal(0, self.table.orta()[doublet][coord + 3]/15)
+                    if value > self.table.orta()[doublet][coord] + self.table.orta()[doublet][coord + 3]:
+                        value = self.table.orta()[doublet][coord] + self.table.orta()[doublet][coord + 3]
+                    elif value < self.table.orta()[doublet][coord] - self.table.orta()[doublet][coord + 3]:
+                        value = self.table.orta()[doublet][coord] - self.table.orta()[doublet][coord + 3]
+                    table_rotations[doublet][coord] = value
+                    
+                    doublet2 = self.table.corr()[doublet]
+                    if coord == 0 or coord == 1 :
+                        table_rotations[doublet2][coord] = table_rotations[doublet][coord]
+                    else :
+                        #sur l'axe z il y a un moins
+                        table_rotations[doublet2][coord] = - table_rotations[doublet][coord]
 
 # individu1 = Individu(RotTable())
 # print(individu1.table.rot_table)
