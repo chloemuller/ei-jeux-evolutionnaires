@@ -99,6 +99,7 @@ class RotTable:
 
     ###################
 
-table1 = RotTable()
+#table1 = RotTable()
+#print(table1.orta())
 
 # print(table1.rot_table)

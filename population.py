@@ -1,8 +1,9 @@
-import random
-from random import random, randint, randrange
+
+from random import *
 from individu import Individu
 from RotTable import RotTable
 from croisement import croisement_un_point, croisement_deux_points
+import copy
 
 class Population:
     def __init__(self,n):
@@ -13,7 +14,29 @@ class Population:
         """Fonction qui renvoie une nouvelle instance de population a partir d'une liste d'individus"""
         self.n = len(liste_individus)
         self.indiv = liste_individus
+        for i in range(0,self.n):
+            self.indiv[i].evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
+
         return self
+
+    def selection_p_best(self,p=None):
+        if p==None:
+            p=(self.n)//2
+            
+        def tri_rapide_aux(tableau,debut,fin):
+            if debut < fin-1:
+                positionPivot=partitionner(tableau,debut,fin)
+                tri_rapide_aux(tableau,debut,positionPivot)
+                tri_rapide_aux(tableau,positionPivot+1,fin)
+            
+        def tri_rapide(tableau):
+            tri_rapide_aux(tableau,0,len(tableau))
+        
+        liste_individus=self.indiv
+        tri_rapide(liste_individus)
+        individus_selectionnes = [element for element in liste_individus[:p]]
+        self = self.modifier_population(individus_selectionnes)
+
 
     def selection_duel_pondere(self,p=None): 
         if p == None :
@@ -45,26 +68,28 @@ class Population:
         meilleur = self.indiv[0]
         for individu in self.indiv :
             if meilleur.score < individu.score:
+                print("meilleur, individu: ", meilleur.score, individu.score)
                 meilleur = individu
         newself = [meilleur]
-        print("\n \n \nmeilleur", meilleur.table.rot_table, "\n \nscore", meilleur.score)
         vu=set()                        
         t=randrange(0,self.n)
-        m=randrange(0,self.n)             
+        m=randrange(0,self.n)
+        non_vu = [i for i in range(0, self.n)]          
         while len(newself)<p:
-            while m in vu:
-                m=randrange(0,self.n)
-            while t in vu:
-                t=randrange(0,self.n)
+            m = choice(non_vu)
+            non_vu.remove(m)
+            t = choice(non_vu)
+            non_vu.remove(t)
+            
             x=self.indiv[m]
             y=self.indiv[t]
-            vu.add(t)
-            vu.add(m)
             if x.score>=y.score:
                 newself.append(x)
             else:
                 newself.append(y)
         self = self.modifier_population(newself)
+
+
 
     def selection_par_rang(self,p = None):
         if p == None :
@@ -134,18 +159,20 @@ class Population:
             p = (self.n)//2
         vieille_taille = self.n
         selection(p)
-        newself = list(self.indiv)
+        newself = [element for element in self.indiv]       
         while len(newself)<vieille_taille:
             m=randrange(0,self.n)
             t=randrange(0,self.n)
-            x=newself[m]
-            y=newself[t]
+            x=copy.deepcopy(newself[m])
+            y=copy.deepcopy(newself[t])
             couple_enfant = enfant(x,y)
             for child in couple_enfant :
                 child.mutation(proba_mutation)
+                child.evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
             newself.append(couple_enfant[0])
             newself.append(couple_enfant[1])
         self = self.modifier_population(newself)
+
 
 def afficher(popu):
     for individu in popu.indiv :
@@ -164,8 +191,6 @@ def test():
     afficher(popu)
 
 #test()
-
-
 
     
 
