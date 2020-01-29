@@ -1,4 +1,3 @@
-
 from random import *
 from individu import Individu
 from RotTable import RotTable
@@ -14,9 +13,6 @@ class Population:
         """Fonction qui renvoie une nouvelle instance de population a partir d'une liste d'individus"""
         self.n = len(liste_individus)
         self.indiv = liste_individus
-        for i in range(0,self.n):
-            self.indiv[i].evaluate()
-
         return self
 
     def selection_p_best(self,p=None):
@@ -73,7 +69,7 @@ class Population:
             
             x=self.indiv[m]
             y=self.indiv[t]
-            if x.score<=y.score:
+            if x.score<y.score:
                 newself.append(x)
             else:
                 newself.append(y)
@@ -142,7 +138,7 @@ class Population:
             for child in couple_enfant :
                 lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
                 brin = ''.join(lineList[1:])
-                child.mutation(proba_mutation)
+                child.mutation_close_values(proba_mutation, number_of_mutations = 2)
                 child.evaluate()
             newself.append(couple_enfant[0])
             newself.append(couple_enfant[1])
@@ -182,6 +178,7 @@ def test2():
 
 
 # test2()
+
 
 
 

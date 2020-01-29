@@ -50,6 +50,9 @@ def main(N,tmax,pmutation, proportion, indice_selection, population_initiale, en
             if individu.score<mini:
                 best=individu
                 mini=individu.score
+        
+        S2=[individu.score for individu in People.indiv]
+        avg = sum(S2)/len(S2)
         L.append(mini)
 
     # plt.subplot(221)
