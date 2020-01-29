@@ -12,12 +12,10 @@ import matplotlib.pyplot as plt
 
 
 def main(N,tmax,pmutation, proportion,brin="plasmid_8k.fasta"):
-    '''lineList = [line.rstrip('\n') for line in open(brin)]
-	brin = ''.join(lineList[1:])'''
     L=[]
     People=Population(N)
     for i in range(tmax):
-        print(i)
+        #print(i)
         max=0
         best=None
         People.reproduction(p = proportion, proba_mutation= pmutation)
@@ -26,10 +24,17 @@ def main(N,tmax,pmutation, proportion,brin="plasmid_8k.fasta"):
                 best=individu
                 max=individu.score
         L.append(max)
+        print(i,":",max)
 
     plt.plot([i for i in range(tmax)], L)
     plt.show()
-    return(best,People)
+    return(best, People)
+
+
+best, People = main(60,100,0.01,20)
+traj = Traj3D()
+traj.compute(best.brin,best.table)
+traj.draw("plot")
 
 
 best,People = main(100,100,0.01,50)

@@ -15,8 +15,7 @@ class Population:
         self.n = len(liste_individus)
         self.indiv = liste_individus
         for i in range(0,self.n):
-            self.indiv[i].evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
-
+            self.indiv[i].evaluate()
         return self
 
     def selection_p_best(self,p=None):
@@ -68,7 +67,7 @@ class Population:
         meilleur = self.indiv[0]
         for individu in self.indiv :
             if meilleur.score < individu.score:
-                print("meilleur, individu: ", meilleur.score, individu.score)
+                #print("meilleur, individu: ", meilleur.score, individu.score)
                 meilleur = individu
         newself = [meilleur]
         vu=set()                        
@@ -168,7 +167,7 @@ class Population:
             couple_enfant = enfant(x,y)
             for child in couple_enfant :
                 child.mutation(proba_mutation)
-                child.evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
+                child.evaluate()
             newself.append(couple_enfant[0])
             newself.append(couple_enfant[1])
         self = self.modifier_population(newself)
@@ -184,7 +183,7 @@ def test():
     popu = Population(4)
     print("\n POPULATION INITIALE \n")
     for individu in popu.indiv :
-        individu.evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
+        individu.evaluate()
     afficher(popu)
     popu.reproduction(selection = popu.selection_duel)
     print("\n REPRODUCTION \n")
