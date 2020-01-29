@@ -33,8 +33,9 @@ class Individu():
 
         list_distance = []
 
-        begining = np.array(traj_array[0:2*numb_ajout])
-        end = np.array(traj_array[-2*numb_ajout:])
+        begining = traj_array[0:2*numb_ajout]
+        end = traj_array[-2*numb_ajout:]
+
         for i in range(numb_ajout):
 
                 nuc_coordonate_beg = begining[i]
@@ -97,7 +98,7 @@ class Individu():
                 table_rotation_not_seen.remove(doublet)
 
                 for coord in range(3):
-                    value = table_rotations[doublet][coord] + np.random.uniform( low = - self.table.orta()[doublet][coord + 3]/10, high = - self.table.orta()[doublet][coord + 3]/10)
+                    value = table_rotations[doublet][coord] + np.random.normal(0, self.table.orta()[doublet][coord + 3]/15)
                     if value > self.table.orta()[doublet][coord] + self.table.orta()[doublet][coord + 3]:
                         value = self.table.orta()[doublet][coord] + self.table.orta()[doublet][coord + 3]
                     elif value < self.table.orta()[doublet][coord] - self.table.orta()[doublet][coord + 3]:

@@ -42,7 +42,7 @@ Sont fournis :
 Le groupe est composé de Loïc Busson, Claire Zhao, Sandra Ayumi, Rodrigo Kappes, Solal O'Sullivan, Chloé Muller, Gauthier Roy et Carlos Santos Garcia.
 Pour utiliser notre algorithme génétique, appeler la fonction main() du fichier algogenetique.py en introduisant le nombre d'individus par générations, le nombre de générations, la probabilité de mutation et le nombre d'individus séléctionnés à chaque itération. L'algorithme évalue les individus sur la séquence de nucléotides choisie. Il affiche aussi la trajectoire de la séquence voulue avec la meilleure table de rotations générée par l'algorithme à la dernière étape.
 Les fichiers introduits par nous sont:
-- individu.py
-- 
+- individu.py: Création de la classe Individu (attributs et méthodes) qui permettent de donner un score à chaque table de rotations et l'apparition de mutations.
+- population.py: Création de la classe Population. Une population à un attribut "indiv" qui est une liste d'individus, chacun caractérisé par sa table de rotations. Cette classe permet de faire la séléction des individus à garder à chaque itération par de différentes méthodes et d'actualiser la population.
 - algogenetique.py : Rassemble les fonctionnalités des autres algorithmes pour faire tourner l'algorithme génétique et afficher la trajectoire après l'algorithme génétique.
 - croisement.py : Fonctions de croisement utilisées pour la génération des enfants au moment de la 

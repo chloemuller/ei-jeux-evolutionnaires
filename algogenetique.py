@@ -33,8 +33,11 @@ def main(N,tmax,pmutation, proportion):
             if individu.score<mini:
                 best=individu
                 mini=individu.score
+        
+        S2=[individu.score for individu in People.indiv]
+        avg = sum(S2)/len(S2)
         L.append(mini)
-        print(i,":",mini)
+        print(i,"avg:",avg,"best score:", mini)
 
     plt.subplot(221)
     plt.plot([i for i in range(tmax)], L)
@@ -56,7 +59,7 @@ def main(N,tmax,pmutation, proportion):
 
 lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
 brin = ''.join(lineList[1:])
-best,People = main(20,10,0.01,10)
+best,People = main(50,20,0.05,25)
 test = Traj3D()
 test.compute(brin, best.table)
 test.draw("first_plot")

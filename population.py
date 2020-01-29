@@ -163,9 +163,7 @@ class Population:
             y=copy.deepcopy(newself[t])
             couple_enfant = enfant(x,y)
             for child in couple_enfant :
-                lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
-                brin = ''.join(lineList[1:])
-                child.mutation(proba_mutation)
+                child.mutation_close_values(proba_mutation, number_of_mutations = 2)
                 child.evaluate()
             newself.append(couple_enfant[0])
             newself.append(couple_enfant[1])
