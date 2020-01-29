@@ -68,7 +68,7 @@ class Population:
         meilleur = self.indiv[0]
         for individu in self.indiv :
             if meilleur.score > individu.score:
-                print("meilleur, individu: ", meilleur.score, individu.score)
+                #print("meilleur, individu: ", meilleur.score, individu.score)
                 meilleur = individu
         newself = [meilleur]
         vu=set()                        
@@ -83,7 +83,7 @@ class Population:
             
             x=self.indiv[m]
             y=self.indiv[t]
-            if x.score<y.score:
+            if x.score<=y.score:
                 newself.append(x)
             else:
                 newself.append(y)

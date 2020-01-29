@@ -8,14 +8,14 @@ import croisement
 from Traj3D import *
 from random import random
 import matplotlib.pyplot as plt
-import time 
+import time
 
 # Debut du decompte du temps
 start_time = time.time()
 
 
-
 def main(N,tmax,pmutation, proportion):
+
     L=[]
     lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
     brin = ''.join(lineList[1:])
@@ -35,7 +35,6 @@ def main(N,tmax,pmutation, proportion):
                 best=individu
                 mini=individu.score
         L.append(mini)
-
     plt.subplot(221)
     plt.plot([i for i in range(tmax)], L)
     
