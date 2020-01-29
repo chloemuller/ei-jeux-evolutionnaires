@@ -36,3 +36,13 @@ Sont fournis :
 - le fichier <tt>Main.py</tt> illustrant un exemple d'utilisation de la classe Traj3D,
 - deux fichiers <tt>.fasta</tt> contenant les séquences de deux plasmides de longueur différente (8 000 dans un cas et 180 000 dans l'autre).
 
+
+## Instructions
+
+Le groupe est composé de Loïc Busson, Claire Zhao, Sandra Ayumi, Rodrigo Kappes, Solal O'Sullivan, Chloé Muller, Gauthier Roy et Carlos Santos Garcia.
+Pour utiliser notre algorithme génétique, appeler la fonction main() du fichier algogenetique.py en introduisant le nombre d'individus par générations, le nombre de générations, la probabilité de mutation et le nombre d'individus séléctionnés à chaque itération. L'algorithme évalue les individus sur la séquence de nucléotides choisie. Il affiche aussi la trajectoire de la séquence voulue avec la meilleure table de rotations générée par l'algorithme à la dernière étape.
+Les fichiers introduits par nous sont:
+- individu.py
+- 
+- algogenetique.py : Rassemble les fonctionnalités des autres algorithmes pour faire tourner l'algorithme génétique et afficher la trajectoire après l'algorithme génétique.
+- croisement.py : Fonctions de croisement utilisées pour la génération des enfants au moment de la 
