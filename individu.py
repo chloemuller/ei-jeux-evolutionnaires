@@ -37,9 +37,9 @@ class Individu():
                 list_distance += [distance_first_nuc, distance_last_nuc]
 
 
-        self.score = 1/max(list_distance)
+        self.score = max(list_distance)
 
-        return 1/max(list_distance)
+        return max(list_distance)
 
 
     def mutation(self, proba = P1):
