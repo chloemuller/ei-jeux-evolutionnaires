@@ -2,7 +2,7 @@ from RotTable import RotTable
 from Traj3D import Traj3D
 import numpy as np
 from math import sqrt, inf
-from random import random
+from random import random, choice
 
 P1 = 0.015
 
@@ -50,9 +50,8 @@ class Individu():
 
 
     def mutation(self, proba = P1):
-        '''Modifie des rotations dans la table des rotations en préservant les symétries'''
         table_rotations = self.table.rot_table
-        for doublet in table_rotations :
+        for doublet in sorted(table_rotations.keys()) :
             for coord in range(3):
                 tir = random()
                 if tir < proba :
@@ -64,19 +63,48 @@ class Individu():
                         #sur l'axe z il y a un moins
                         table_rotations[doublet2][coord] = - table_rotations[doublet][coord]
 
-    def mutation_with_numbers(self, proba = P1, number_of_mutations = 5):
+    def mutation_with_numbers(self, proba = P1, number_of_mutations = 1):
         table_rotations = self.table.rot_table
-        for i in range(0,number_of_mutations):
-            tir = random()
-            if tir < proba :
-                doubletNumber = randrange(0,8)
-                counter = 0
-                for doublet in table_rotations:
-                    if counter==doubletNumber:
-                        break
-                    counter+=1
+        table_rotation_not_seen = [i for i in sorted(table_rotations.keys())]
+        table_rotation_not_seen = table_rotation_not_seen[:8]
+
+        tir = random()
+        if tir < proba :
+            for i in range(0,number_of_mutations):
+                
+                doublet = choice(table_rotation_not_seen)
+                table_rotation_not_seen.remove(doublet)
+
                 for coord in range(3):
                     table_rotations[doublet][coord] =np.random.uniform(low = self.table.orta()[doublet][coord] - self.table.orta()[doublet][coord + 3], high = self.table.orta()[doublet][coord] + self.table.orta()[doublet][coord + 3])
+                    doublet2 = self.table.corr()[doublet]
+                    if coord == 0 or coord == 1 :
+                        table_rotations[doublet2][coord] = table_rotations[doublet][coord]
+                    else :
+                        #sur l'axe z il y a un moins
+                        table_rotations[doublet2][coord] = - table_rotations[doublet][coord]
+
+
+    def mutation_close_values(self, proba = P1, number_of_mutations = 1):
+        table_rotations = self.table.rot_table
+        table_rotation_not_seen = [i for i in sorted(table_rotations.keys())]
+        table_rotation_not_seen = table_rotation_not_seen[:8]
+
+        tir = random()
+        if tir < proba :
+            for i in range(0,number_of_mutations):
+
+                doublet = choice(table_rotation_not_seen)
+                table_rotation_not_seen.remove(doublet)
+
+                for coord in range(3):
+                    value = table_rotations[doublet][coord] + np.random.uniform( low = - self.table.orta()[doublet][coord + 3]/10, high = - self.table.orta()[doublet][coord + 3]/10)
+                    if value > self.table.orta()[doublet][coord] + self.table.orta()[doublet][coord + 3]:
+                        value = self.table.orta()[doublet][coord] + self.table.orta()[doublet][coord + 3]
+                    elif value < self.table.orta()[doublet][coord] - self.table.orta()[doublet][coord + 3]:
+                        value = self.table.orta()[doublet][coord] - self.table.orta()[doublet][coord + 3]
+                    table_rotations[doublet][coord] = value
+                    
                     doublet2 = self.table.corr()[doublet]
                     if coord == 0 or coord == 1 :
                         table_rotations[doublet2][coord] = table_rotations[doublet][coord]
