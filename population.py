@@ -67,7 +67,11 @@ class Population:
             p = (self.n)//2
         meilleur = self.indiv[0]
         for individu in self.indiv :
+<<<<<<< HEAD
             if meilleur.score < individu.score:
+=======
+            if meilleur.score > individu.score:
+>>>>>>> 69e8a061d6fd93996d67f8b97e2c0e9d1e93f60a
                 print("meilleur, individu: ", meilleur.score, individu.score)
                 meilleur = individu
         newself = [meilleur]
@@ -83,7 +87,11 @@ class Population:
             
             x=self.indiv[m]
             y=self.indiv[t]
+<<<<<<< HEAD
             if x.score>=y.score:
+=======
+            if x.score<y.score:
+>>>>>>> 69e8a061d6fd93996d67f8b97e2c0e9d1e93f60a
                 newself.append(x)
             else:
                 newself.append(y)
@@ -167,8 +175,10 @@ class Population:
             y=copy.deepcopy(newself[t])
             couple_enfant = enfant(x,y)
             for child in couple_enfant :
+                lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
+                brin = ''.join(lineList[1:])
                 child.mutation(proba_mutation)
-                child.evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
+                child.evaluate(brin)
             newself.append(couple_enfant[0])
             newself.append(couple_enfant[1])
         self = self.modifier_population(newself)
