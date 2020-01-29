@@ -54,8 +54,8 @@ class Population:
             y=self.indiv[t]
             vu.add(t)
             vu.add(m)
-            p=random()
-            if p>x.score/(x.score+y.score):
+            proba=random()
+            if proba>x.score/(x.score+y.score):
                 newself.append(y)
             else:
                 newself.append(x)
@@ -145,8 +145,8 @@ class Population:
         while len(newself)<p:
             m=m=randrange(0, self.n)
             x=self.indiv[m]
-            p=random()
-            if p<=x.score/somme:
+            proba=random()
+            if proba<=x.score/somme:
                 newself.append(x)
         self = self.modifier_population(newself)
 
