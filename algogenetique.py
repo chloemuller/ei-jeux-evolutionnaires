@@ -29,10 +29,11 @@ def main(N,tmax,pmutation, proportion,brin="plasmid_8k.fasta"):
 
     plt.plot([i for i in range(tmax)], L)
     plt.show()
-    return(best)
+    return(best,People)
 
 
-main(100,100,0,50)
-
-
+best,People = main(100,100,0.01,50)
+test = Traj3D()
+test.compute("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA", best.table)
+test.draw("first_plot")
 
