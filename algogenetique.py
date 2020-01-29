@@ -119,7 +119,7 @@ def comparaison_selections(N,generation,mut,surv):
 # compare_mutation()
 
 Nombre_indiv = [50,100,150,200,250,300,350,400,450,500,550,600,650,700]
-Nombre_generation = [10,20,30,40,50,60]
+Nombre_generation = [10,20,30,40,50,60,70,80,90]
 Prob_mutation = [0.001,0.005,0.01,0.05,0.1]
 Sur=[0.1*k for k in range(1,10)]
 
