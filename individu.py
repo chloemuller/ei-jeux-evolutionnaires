@@ -7,7 +7,7 @@ from random import random
 P1 = 0.015
 
 class Individu():
-
+    ''' Un individu est caractérisé par sa table de rotations (individu.table)'''
     def __init__(self, table):
         lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
         brin = ''.join(lineList[1:])
@@ -18,6 +18,7 @@ class Individu():
         self.score = self.evaluate()
 
     def evaluate(self):
+        ''' Evalue le score d'un individu sur un nombre numb_ajout de points'''
         traj = Traj3D()
 
         numb_ajout = 6
@@ -47,6 +48,7 @@ class Individu():
 
 
     def mutation(self, proba = P1):
+        '''Modifie des rotations dans la table des rotations en préservant les symétries'''
         table_rotations = self.table.rot_table
         for doublet in table_rotations :
             for coord in range(3):
