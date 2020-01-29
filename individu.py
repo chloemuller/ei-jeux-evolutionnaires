@@ -15,7 +15,7 @@ class Individu():
         lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
         self.brin = ''.join(lineList[1:])
         #self.brin = "AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA"
-        self.score = self.evaluate()
+        self.score = None
 
     def evaluate(self):
         ''' Evalue le score d'un individu sur un nombre numb_ajout de points'''
