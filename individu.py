@@ -24,7 +24,6 @@ class Individu():
 
         traj.compute(last_seq + brin + fisrt_seq, self.table)
         traj_array = np.array(traj.getTraj())
-        print(traj_array)
 
         list_distance = []
 
@@ -34,7 +33,6 @@ class Individu():
         for i in range(numb_ajout):
 
                 nuc_coordonate_beg = begining[i]
-                print(nuc_coordonate_beg)
                 nuc_coordonate_end = end[i]
                 distance_nuc = np.linalg.norm(nuc_coordonate_beg - nuc_coordonate_end, ord=2)
                 list_distance += [distance_nuc]
