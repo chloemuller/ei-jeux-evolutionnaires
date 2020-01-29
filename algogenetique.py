@@ -49,6 +49,7 @@ def main(N,tmax,pmutation, proportion):
     S2=[individu.score for individu in People.indiv]
     print("Score final: ",best.score)
     print("Avg:", sum(S2)/len(S2))
+    print("Distance final: ",best.distance)
 
     plt.subplot(224)
     plt.hist(S2, range = (0,maximum+10), bins = 20, color = 'blue')
@@ -59,7 +60,7 @@ def main(N,tmax,pmutation, proportion):
 
 lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
 brin = ''.join(lineList[1:])
-best,People = main(50,20,0.05,25)
+best,People = main(100,10,0.05,10)
 test = Traj3D()
 test.compute(brin, best.table)
 test.draw("first_plot")
