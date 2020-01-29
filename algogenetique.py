@@ -102,28 +102,28 @@ def compare_mutation():
     plt.show()   
 
 
-def comparaison_selections():
+def comparaison_selections(N,generation,mut,surv):
     liste_selections = ["selection_p_best", "selection_duel_pondere", "selection_duel", "selection_par_rang", "selection_proportionnelle"]
     liste_time = []
     plt.figure()
-    People = Population(100)
+    People = Population(N)
     for individu in People.indiv:
         individu.evaluate()
     S2=[individu.score for individu in People.indiv]
-    plt.hist(S2, range = (0,int(max(S2)+10)), bins = 20, color = 'blue')
-    plt.show()
-    plt.figure()
+    #plt.hist(S2, range = (0,int(max(S2)+10)), bins = 20, color = 'blue')
+    #plt.show()
+    #plt.figure()
     for i in range(5):
         print("\n", liste_selections[i], "\n")
         start_time = time.time()
-        best = main(100, 35, 0.001, 50, i, deepcopy(People))[0]
+        best = main(N, generation, mut, surv, i, deepcopy(People))[0]
         liste_time.append((liste_selections[i], time.time() - start_time, best.score))
-    plt.legend()
-    plt.xlabel("Nombre de générations")
-    plt.ylabel("Score du meilleur individu")
-    plt.title("Comparaison en fonction de la méthode de sélection")
+    #plt.legend()
+    #plt.xlabel("Nombre de générations")
+    #plt.ylabel("Score du meilleur individu")
+    #plt.title("Comparaison en fonction de la méthode de sélection")
     print(numpy.array(liste_time))
-    plt.show()   
+    #plt.show()   
 
 # def comparaisons_croisements():
 #     liste_croisements = ["croisement_un_point", "croisement_deux_points"]
@@ -133,7 +133,17 @@ def comparaison_selections():
 
 # compare_mutation()
 
-comparaison_selections()
+Nombre_indiv = [50,100,150,200,250,300,350,400,450,500,550,600,650,700]
+Nombre_generation = [10,20,30,40,50,60]
+Prob_mutation = [0.001,0.005,0.01,0.05,0.1]
+Sur=[0.1*k for k in range(1,4)]
+
+Produit = [(x,y,z) for x in Nombre_indiv for y in Nombre_generation for z in Prob_mutation]
+
+for indiv,nb_gen,mut in Produit:
+    for element in Sur:
+        sur = int(element * indiv)
+        comparaison_selections(indiv,nb_gen,mut,sur)
 
 # [['selection_p_best' '22.637820959091187' '116.30569654472626']
 #  ['selection_duel_pondere' '22.636890172958374' '46.6242321955727']
