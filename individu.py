@@ -16,6 +16,7 @@ class Individu():
         self.brin = ''.join(lineList[1:])
         #self.brin = "AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA"
         self.score = None
+        self.distance = None
 
     def evaluate(self):
         ''' Evalue le score d'un individu sur un nombre numb_ajout de points'''
@@ -42,10 +43,10 @@ class Individu():
                 nuc_coordonate_end = end[i]
                 distance_nuc = np.linalg.norm(nuc_coordonate_beg - nuc_coordonate_end, ord=2)
                 list_distance += [distance_nuc]
-
+        
 
         self.score = max(list_distance)
-
+        self.distance = np.linalg.norm(traj_array[numb_ajout] - traj_array[-(numb_ajout+1)], ord=2)
         #return max(list_distance)
 
 
