@@ -1,4 +1,3 @@
-
 from random import *
 from individu import Individu
 from RotTable import RotTable
@@ -14,9 +13,6 @@ class Population:
         """Fonction qui renvoie une nouvelle instance de population a partir d'une liste d'individus"""
         self.n = len(liste_individus)
         self.indiv = liste_individus
-        for i in range(0,self.n):
-            self.indiv[i].evaluate()
-
         return self
 
     def selection_p_best(self,p=None):
@@ -83,7 +79,7 @@ class Population:
             
             x=self.indiv[m]
             y=self.indiv[t]
-            if x.score<=y.score:
+            if x.score<y.score:
                 newself.append(x)
             else:
                 newself.append(y)
@@ -195,6 +191,7 @@ def test():
 #test()
 
     
+
 
 
 

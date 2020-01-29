@@ -84,10 +84,10 @@ class Individu():
 # print(individu1.table.rot_table)
 # individu1.mutation()
 
-table = RotTable()
-test = Individu(table)
-test.evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
-print(test.score)
+#table = RotTable()
+#test = Individu(table)
+#test.evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
+#print(test.score)
 
 
 # qqun=Individu(RotTable())
