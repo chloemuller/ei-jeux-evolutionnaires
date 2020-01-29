@@ -3,6 +3,7 @@ from random import *
 from individu import Individu
 from RotTable import RotTable
 from croisement import croisement_un_point, croisement_deux_points
+import copy
 
 class Population:
     def __init__(self,n):
@@ -13,9 +14,15 @@ class Population:
         """Fonction qui renvoie une nouvelle instance de population a partir d'une liste d'individus"""
         self.n = len(liste_individus)
         self.indiv = liste_individus
+        for i in range(0,self.n):
+            self.indiv[i].evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
+
         return self
 
-    def selection_p_best(self,p=self.n//2):
+    def selection_p_best(self,p=None):
+        if p==None:
+            p=(self.n)//2
+            
         def tri_rapide_aux(tableau,debut,fin):
             if debut < fin-1:
                 positionPivot=partitionner(tableau,debut,fin)
@@ -80,8 +87,6 @@ class Population:
                 newself.append(x)
             else:
                 newself.append(y)
-        for i in range(0, len(newself)):
-            print(newself[i].score)
         self = self.modifier_population(newself)
 
 
@@ -158,8 +163,8 @@ class Population:
         while len(newself)<vieille_taille:
             m=randrange(0,self.n)
             t=randrange(0,self.n)
-            x=newself[m]
-            y=newself[t]
+            x=copy.deepcopy(newself[m])
+            y=copy.deepcopy(newself[t])
             couple_enfant = enfant(x,y)
             for child in couple_enfant :
                 child.mutation(proba_mutation)

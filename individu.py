@@ -39,7 +39,7 @@ class Individu():
 
         self.score = 1/max(list_distance)
 
-        return 1/distance
+        return 1/max(list_distance)
 
 
     def mutation(self, proba = P1):
