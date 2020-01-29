@@ -45,7 +45,7 @@ def main(N,tmax,pmutation, proportion, indice_selection, population_initiale, en
     for individu in People.indiv:
             if individu.score<mini:
                 mini=individu.score
-    L=[mini]
+    # L=[mini]
     for i in range(tmax):
         print(i)
         People.reproduction(p = proportion, proba_mutation= pmutation, selection = indice_selection, enfant = enfant)
@@ -56,13 +56,13 @@ def main(N,tmax,pmutation, proportion, indice_selection, population_initiale, en
                 best=individu
                 mini=individu.score
         
-        S2=[individu.score for individu in People.indiv]
-        avg = sum(S2)/len(S2)
-        L.append(mini)
+        # S2=[individu.score for individu in People.indiv]
+        # avg = sum(S2)/len(S2)
+        # L.append(mini)
 
     # plt.subplot(221)
-    liste_selections = ["selection_p_best", "selection_duel_pondere", "selection_duel", "selection_par_rang", "selection_proportionnelle"]
-    plt.plot([j for j in range(len(L))], L, label = liste_selections[indice_selection])
+    # liste_selections = ["selection_p_best", "selection_duel_pondere", "selection_duel", "selection_par_rang", "selection_proportionnelle"]
+    # plt.plot([j for j in range(len(L))], L, label = liste_selections[indice_selection])
     
 
     # plt.subplot(223)
@@ -105,25 +105,23 @@ def compare_mutation():
 def comparaison_selections():
     liste_selections = ["selection_p_best", "selection_duel_pondere", "selection_duel", "selection_par_rang", "selection_proportionnelle"]
     liste_time = []
-    plt.figure()
-    People = Population(100)
-    for individu in People.indiv:
-        individu.evaluate()
-    S2=[individu.score for individu in People.indiv]
-    plt.hist(S2, range = (0,int(max(S2)+10)), bins = 20, color = 'blue')
-    plt.show()
-    plt.figure()
+    # plt.figure()
+    People = Population(1000)
+    # S2=[individu.score for individu in People.indiv]
+    # plt.hist(S2, range = (0,int(max(S2)+10)), bins = 20, color = 'blue')
+    # plt.show()
+    # plt.figure()
     for i in range(5):
         print("\n", liste_selections[i], "\n")
         start_time = time.time()
-        best = main(100, 35, 0.001, 50, i, deepcopy(People))[0]
+        best = main(500, 5, 0.001, 500, i, deepcopy(People))[0]
         liste_time.append((liste_selections[i], time.time() - start_time, best.score))
-    plt.legend()
-    plt.xlabel("Nombre de générations")
-    plt.ylabel("Score du meilleur individu")
-    plt.title("Comparaison en fonction de la méthode de sélection")
-    print(numpy.array(liste_time))
-    plt.show()   
+    # plt.legend()
+    # plt.xlabel("Nombre de générations")
+    # plt.ylabel("Score du meilleur individu")
+    # plt.title("Comparaison en fonction de la méthode de sélection")
+    return numpy.array(liste_time)
+    # plt.show()   
 
 # def comparaisons_croisements():
 #     liste_croisements = ["croisement_un_point", "croisement_deux_points"]
@@ -132,8 +130,11 @@ def comparaison_selections():
 
 
 # compare_mutation()
-
-comparaison_selections()
+liste = []
+for i in range(3):
+    liste.append(comparaison_selections())
+    print(liste)
+print(liste)
 
 # [['selection_p_best' '22.637820959091187' '116.30569654472626']
 #  ['selection_duel_pondere' '22.636890172958374' '46.6242321955727']
