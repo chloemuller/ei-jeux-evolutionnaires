@@ -106,7 +106,7 @@ def comparaison_selections():
     liste_selections = ["selection_p_best", "selection_duel_pondere", "selection_duel", "selection_par_rang", "selection_proportionnelle"]
     liste_time = []
     # plt.figure()
-    People = Population(1000)
+    People = Population(100)
     # S2=[individu.score for individu in People.indiv]
     # plt.hist(S2, range = (0,int(max(S2)+10)), bins = 20, color = 'blue')
     # plt.show()
@@ -114,7 +114,7 @@ def comparaison_selections():
     for i in range(5):
         print("\n", liste_selections[i], "\n")
         start_time = time.time()
-        best = main(500, 5, 0.001, 500, i, deepcopy(People))[0]
+        best = main(100, 35, 0.001, 50, i, deepcopy(People), enfant = croisement_deux_points)[0]
         liste_time.append((liste_selections[i], time.time() - start_time, best.score))
     # plt.legend()
     # plt.xlabel("Nombre de générations")
@@ -131,7 +131,7 @@ def comparaison_selections():
 
 # compare_mutation()
 liste = []
-for i in range(3):
+for i in range(5):
     liste.append(comparaison_selections())
     print(liste)
 print(liste)
