@@ -8,7 +8,7 @@ import croisement
 from Traj3D import *
 from random import random
 import matplotlib.pyplot as plt
-
+import time 
 
 # def main(N,tmax,pmutation, proportion,brin="plasmid_8k.fasta"):
 #     '''lineList = [line.rstrip('\n') for line in open(brin)]
@@ -28,25 +28,6 @@ import matplotlib.pyplot as plt
 
 #     plt.plot([i for i in range(tmax)], L, label = str(pmutation))
 #     return(best)
-
-def test_mutation():
-    plt.figure()
-    for i in range(10):
-        print("\n \n", i)
-        main(100,100,i/50,50)
-    plt.legend()
-    plt.xlabel("Nombre de générations")
-    plt.ylabel("Score du meilleur individu")
-    plt.title("Comparaison en fonction du taux de mutation")
-    plt.show()
-    
-
-
-import time 
-
-# Debut du decompte du temps
-start_time = time.time()
-test_mutation()
 
 
 def main(N,tmax,pmutation, proportion):
@@ -96,5 +77,19 @@ def main(N,tmax,pmutation, proportion):
 # test.draw("first_plot")
 
 
-# Affichage du temps d execution
-print("Temps d'execution : %s secondes " % (time.time() - start_time))
+
+def test_mutation():
+    plt.figure()
+    for i in range(1,5):
+        print("\n \n", i)
+        main(100,40,10**(-i),50)
+    plt.legend()
+    plt.xlabel("Nombre de générations")
+    plt.ylabel("Score du meilleur individu")
+    plt.title("Comparaison en fonction du taux de mutation")
+    print("Temps d'execution : %s secondes " % (time.time() - start_time))
+    plt.show()   
+
+
+start_time = time.time()
+test_mutation()
