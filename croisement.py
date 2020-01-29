@@ -23,6 +23,8 @@ ROT_TABLE = {\
 
 
 def croisement_un_point(parent1, parent2):
+    '''Croise les tables de rotation des parents pour former deux enfants en respectant les symétries du problème'''
+    ''' Retourne deux enfants'''
     enfant1 = Individu(RotTable())
     enfant2 = Individu(RotTable())
     comp = 0
@@ -57,6 +59,8 @@ def croisement_un_point(parent1, parent2):
 
 
 def croisement_deux_points(parent1, parent2):
+    ''' Croise les tables de rotationd des deux parents en croisant à deux points et respectant les symétries du problème'''
+    ''' Retourne deux enfants'''
     enfant1 = Individu(RotTable())
     enfant2 = Individu(RotTable())
     comp = 0
