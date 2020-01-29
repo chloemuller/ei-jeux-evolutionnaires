@@ -9,40 +9,40 @@ P1 = 0.015
 class Individu():
 
     def __init__(self, table):
+        lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
+        brin = ''.join(lineList[1:])
         self.table = table
         lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
         self.brin = ''.join(lineList[1:])
         #self.brin = "AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA"
         self.score = self.evaluate()
-    
     def evaluate(self):
         traj = Traj3D()
 
-        numb_ajout = 3
+        numb_ajout = 6
 
         fisrt_seq = self.brin[0:numb_ajout]
         last_seq = self.brin[-numb_ajout:]
 
         traj.compute(last_seq + self.brin + fisrt_seq, self.table)
         traj_array = np.array(traj.getTraj())
+
         list_distance = []
 
+        begining = traj_array[0:2*numb_ajout, 0:3]
+        end = traj_array[-2*numb_ajout:, 0:3]
+
         for i in range(numb_ajout):
-                first_nuc_coordonate = traj_array[numb_ajout+i, 0:3]
-                first_nuc_coordonate_compute = traj_array[-(numb_ajout-i), 0:3]
-                
-                last_nuc_coordonate = traj_array[-(2*numb_ajout-i), 0:3]
-                last_nuc_coordonate_compute = traj_array[i, 0:3]
 
-                distance_first_nuc = np.linalg.norm(first_nuc_coordonate - first_nuc_coordonate_compute, ord=2)
-                distance_last_nuc = np.linalg.norm(last_nuc_coordonate - last_nuc_coordonate_compute, ord=2)
-
-                list_distance += [distance_first_nuc, distance_last_nuc]
+                nuc_coordonate_beg = begining[i]
+                nuc_coordonate_end = end[i]
+                distance_nuc = np.linalg.norm(nuc_coordonate_beg - nuc_coordonate_end, ord=2)
+                list_distance += [distance_nuc]
 
 
-        self.score = 1/max(list_distance)
+        self.score = max(list_distance)
 
-        return 1/max(list_distance)
+        #return max(list_distance)
 
 
     def mutation_with_numbers(self, proba = P1):
@@ -79,14 +79,32 @@ class Individu():
                     else :
                         #sur l'axe z il y a un moins
                         table_rotations[doublet2][coord] = - table_rotations[doublet][coord]
+        table_rotations = self.table.rot_table
+        for i in range(0,number_of_mutations):
+            tir = random()
+            if tir < proba :
+                doubletNumber = randrange(0,8)
+                counter = 0
+                for doublet in table_rotations:
+                    if counter==doubletNumber:
+                        break
+                    counter+=1
+                for coord in range(3):
+                    table_rotations[doublet][coord] =np.random.uniform(low = self.table.orta()[doublet][coord] - self.table.orta()[doublet][coord + 3], high = self.table.orta()[doublet][coord] + self.table.orta()[doublet][coord + 3])
+                    doublet2 = self.table.corr()[doublet]
+                    if coord == 0 or coord == 1 :
+                        table_rotations[doublet2][coord] = table_rotations[doublet][coord]
+                    else :
+                        #sur l'axe z il y a un moins
+                        table_rotations[doublet2][coord] = - table_rotations[doublet][coord]
+
 # individu1 = Individu(RotTable())
 # print(individu1.table.rot_table)
-# individu1.mutation()
 
-# table = RotTable()
-# test = Individu(table)
-# test.evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
-# print(test.score)
+#table = RotTable()
+#test = Individu(table)
+#test.evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
+#print(test.score)
 
 
 # qqun=Individu(RotTable())

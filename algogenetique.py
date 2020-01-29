@@ -8,30 +8,59 @@ import croisement
 from Traj3D import *
 from random import random
 import matplotlib.pyplot as plt
+import time
+
+# Debut du decompte du temps
+start_time = time.time()
 
 
-
-def main(N,tmax,pmutation, proportion,brin="plasmid_8k.fasta"):
+def main(N,tmax,pmutation, proportion):
+    
     L=[]
+    lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
+    brin = ''.join(lineList[1:])
     People=Population(N)
+    S1=[]
+    for individu in People.indiv:
+        individu.evaluate()
+        S1.append(int(individu.score))
+    maximum=int(max(S1))
     for i in range(tmax):
-        #print(i)
-        max=0
-        best=None
+        mini=People.indiv[0].score
+        best=People.indiv[0]
         People.reproduction(p = proportion, proba_mutation= pmutation)
         for individu in People.indiv:
-            if individu.score>max:
+            if individu.score<mini:
                 best=individu
-                max=individu.score
-        L.append(1/max)
-        print(i,":",1/max)
+                mini=individu.score
+        L.append(mini)
+        print(i,":",mini)
 
+    plt.subplot(221)
     plt.plot([i for i in range(tmax)], L)
+    
+
+    plt.subplot(223)
+    plt.hist(S1, range = (0, maximum+10), bins = 20, color = 'red')
+
+    S2=[individu.score for individu in People.indiv]
+    print("Score final: ",best.score)
+
+
+    plt.subplot(224)
+    plt.hist(S2, range = (0,maximum+10), bins = 20, color = 'blue')
     plt.show()
-    return(best, People)
+   
+
+    return(best,People)
+
+lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
+brin = ''.join(lineList[1:])
+best,People = main(200,10,0.01,100)
+test = Traj3D()
+test.compute(brin, best.table)
+test.draw("first_plot")
 
 
-best,People = main(60,100,0.01,25)
-traj = Traj3D()
-traj.compute(best.brin,best.table)
-traj.draw("plot")
+# Affichage du temps d execution
+print("Temps d'execution : %s secondes " % (time.time() - start_time))
