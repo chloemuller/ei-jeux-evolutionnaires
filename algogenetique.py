@@ -27,12 +27,18 @@ def main(N,tmax,pmutation, proportion,brin="plasmid_8k.fasta"):
                 max=individu.score
         L.append(max)
 
-    plt.plot([i for i in range(tmax)], L)
-    plt.show()
+    plt.plot([i for i in range(tmax)], L, label = str(pmutation))
     return(best)
 
+def test_mutation():
+    plt.figure()
+    for i in range(10):
+        print("\n \n", i)
+        main(100,100,i/10,50)
+    plt.legend()
+    plt.xlabel("Nombre de générations")
+    plt.ylabel("Score du meilleur individu")
+    plt.title("Comparaison en fonction du taux de mutation")
+    plt.show()
 
-main(100,100,0,50)
-
-
-
+test_mutation()
