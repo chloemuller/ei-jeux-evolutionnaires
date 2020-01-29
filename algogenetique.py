@@ -32,7 +32,7 @@ from copy import deepcopy
 
 def main(N,tmax,pmutation, proportion, indice_selection, population_initiale, enfant = croisement_un_point):
 
-    L=[]
+    
     lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
     brin = ''.join(lineList[1:])
     People=deepcopy(population_initiale)
@@ -41,11 +41,16 @@ def main(N,tmax,pmutation, proportion, indice_selection, population_initiale, en
         individu.evaluate()
         # S1.append(int(individu.score))
     # maximum=int(max(S1))
+    mini=People.indiv[0].score
+    for individu in People.indiv:
+            if individu.score<mini:
+                mini=individu.score
+    L=[mini]
     for i in range(tmax):
         print(i)
+        People.reproduction(p = proportion, proba_mutation= pmutation, selection = indice_selection, enfant = enfant)
         mini=People.indiv[0].score
         best=People.indiv[0]
-        People.reproduction(p = proportion, proba_mutation= pmutation, selection = indice_selection, enfant = enfant)
         for individu in People.indiv:
             if individu.score<mini:
                 best=individu
@@ -57,7 +62,7 @@ def main(N,tmax,pmutation, proportion, indice_selection, population_initiale, en
 
     # plt.subplot(221)
     liste_selections = ["selection_p_best", "selection_duel_pondere", "selection_duel", "selection_par_rang", "selection_proportionnelle"]
-    plt.plot([j for j in range(tmax)], L, label = liste_selections[indice_selection])
+    plt.plot([j for j in range(len(L))], L, label = liste_selections[indice_selection])
     
 
     # plt.subplot(223)
@@ -83,7 +88,7 @@ def main(N,tmax,pmutation, proportion, indice_selection, population_initiale, en
 
 
 
-def test_mutation():
+def compare_mutation():
     start_time = time.time()
     plt.figure()
     for i in range(1,5):
@@ -126,13 +131,18 @@ def comparaison_selections():
 
 
 
-# test_mutation()
+# compare_mutation()
 
 comparaison_selections()
 
+# [['selection_p_best' '22.637820959091187' '116.30569654472626']
+#  ['selection_duel_pondere' '22.636890172958374' '46.6242321955727']
+#  ['selection_duel' '22.21168804168701' '234.7640748029787']
+#  ['selection_par_rang' '22.180259227752686' '190.0163752068961']
+#  ['selection_proportionnelle' '22.329176902770996' '315.7030719673908']]
 
-# [['selection_p_best' '85.1275908946991']
-#  ['selection_duel_pondere' '85.47507500648499']
-#  ['selection_duel' '88.86001086235046']
-#  ['selection_par_rang' '87.76551222801208']
-#  ['selection_proportionnelle' '87.30216789245605']]
+# [['selection_p_best' '22.775274991989136' '106.89365704155766']
+#  ['selection_duel_pondere' '22.716803073883057' '284.11538487097084']
+#  ['selection_duel' '23.19036889076233' '155.83887357033393']
+#  ['selection_par_rang' '22.752396821975708' '118.6068497149259']
+#  ['selection_proportionnelle' '22.71982979774475' '151.80114914793427']]
