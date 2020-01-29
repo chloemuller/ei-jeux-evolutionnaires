@@ -19,6 +19,8 @@ class Individu():
 
     def evaluate(self):
         ''' Evalue le score d'un individu sur un nombre numb_ajout de points'''
+        
+        
         traj = Traj3D()
 
         numb_ajout = 6
