@@ -9,8 +9,6 @@ P1 = 0.015
 class Individu():
     ''' Un individu est caractérisé par sa table de rotations (individu.table)'''
     def __init__(self, table):
-        lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
-        brin = ''.join(lineList[1:])
         self.table = table
         lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
         self.brin = ''.join(lineList[1:])
@@ -24,7 +22,7 @@ class Individu():
         
         traj = Traj3D()
 
-        numb_ajout = 100
+        numb_ajout = 10
 
         fisrt_seq = self.brin[0:numb_ajout]
         last_seq = self.brin[-numb_ajout:]
@@ -99,7 +97,7 @@ class Individu():
                 table_rotation_not_seen.remove(doublet)
 
                 for coord in range(3):
-                    value = table_rotations[doublet][coord] + np.random.normal(0, self.table.orta()[doublet][coord + 3]/15)
+                    value = table_rotations[doublet][coord] + np.random.normal(0, self.table.orta()[doublet][coord + 3]/10)
                     if value > self.table.orta()[doublet][coord] + self.table.orta()[doublet][coord + 3]:
                         value = self.table.orta()[doublet][coord] + self.table.orta()[doublet][coord + 3]
                     elif value < self.table.orta()[doublet][coord] - self.table.orta()[doublet][coord + 3]:
