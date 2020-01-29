@@ -27,7 +27,8 @@ def croisement_un_point(parent1, parent2):
     enfant2 = Individu(RotTable())
     comp = 0
     point_crois= numpy.random.random_integers(0,8)
-    for doublet in ROT_TABLE:
+    list_dinucleotides = sorted(ROT_TABLE)
+    for doublet in list_dinucleotides:
         if doublet == "GA":
             break
         if comp < point_crois:
@@ -62,7 +63,8 @@ def croisement_deux_points(parent1, parent2):
     comp = 0
     point_crois1= numpy.random.random_integers(0,8)
     point_crois2= numpy.random.random_integers(0,8)
-    for doublet in ROT_TABLE:
+    list_dinucleotides = sorted(ROT_TABLE)
+    for doublet in list_dinucleotides:
         if comp < min(point_crois1,point_crois2) or comp > max(point_crois1,point_crois2):
             enfant1.table.rot_table[doublet] = parent1.table.rot_table[doublet]
             correspondent_doublet1 = enfant1.table.corr()[doublet]
