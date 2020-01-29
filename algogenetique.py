@@ -22,11 +22,11 @@ def main(N,tmax,pmutation, proportion):
     People=Population(N)
     S1=[]
     for individu in People.indiv:
-        individu.evaluate(brin)
+        individu.evaluate()
         S1.append(int(individu.score))
     maximum=int(max(S1))
     for i in range(tmax):
-        print(i)
+        #print(i)
         mini=People.indiv[0].score
         best=People.indiv[0]
         People.reproduction(p = proportion, proba_mutation= pmutation)
@@ -35,6 +35,7 @@ def main(N,tmax,pmutation, proportion):
                 best=individu
                 mini=individu.score
         L.append(mini)
+        print(i,":",mini)
 
     plt.subplot(221)
     plt.plot([i for i in range(tmax)], L)
