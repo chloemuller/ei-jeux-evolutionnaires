@@ -26,30 +26,71 @@ def croisement_un_point(parent1, parent2):
     enfant1 = Individu(RotTable())
     enfant2 = Individu(RotTable())
     comp = 0
-    point_crois= numpy.random.random_integers(0,16)
+    point_crois= numpy.random.random_integers(0,8)
     for doublet in ROT_TABLE:
+        if doublet == "GA":
+            break
         if comp < point_crois:
             enfant1.table.rot_table[doublet] = parent1.table.rot_table[doublet]
+            correspondent_doublet1 = enfant1.table.corr()[doublet]
+            enfant1.table.rot_table[correspondent_doublet1] = parent1.table.rot_table[correspondent_doublet1]
+            enfant1.table.rot_table[correspondent_doublet1][2] *= -1
+
             enfant2.table.rot_table[doublet] = parent2.table.rot_table[doublet]
+            correspondent_doublet2 = enfant2.table.corr()[doublet]
+            enfant2.table.rot_table[correspondent_doublet2] = parent2.table.rot_table[correspondent_doublet2]
+            enfant2.table.rot_table[correspondent_doublet2][2] *= -1
+        
         else :
             enfant1.table.rot_table[doublet] = parent2.table.rot_table[doublet]
+            correspondent_doublet1 = enfant1.table.corr()[doublet]
+            enfant1.table.rot_table[correspondent_doublet1] = parent2.table.rot_table[correspondent_doublet1]
+            enfant1.table.rot_table[correspondent_doublet1][2] *= -1
+
             enfant2.table.rot_table[doublet] = parent1.table.rot_table[doublet]
+            correspondent_doublet2 = enfant2.table.corr()[doublet]
+            enfant2.table.rot_table[correspondent_doublet2] = parent1.table.rot_table[correspondent_doublet1]
+            enfant2.table.rot_table[correspondent_doublet2][2] *= -1
+
         comp += 1
     return enfant1, enfant2
 
 
 def croisement_deux_points(parent1, parent2):
-    enfant1 = RotTable()
-    enfant2 = RotTable()
+    enfant1 = Individu(RotTable())
+    enfant2 = Individu(RotTable())
     comp = 0
-    point_crois1= numpy.random.random_integers(0,16)
-    point_crois2= numpy.random.random_integers(0,16)
+    point_crois1= numpy.random.random_integers(0,8)
+    point_crois2= numpy.random.random_integers(0,8)
     for doublet in ROT_TABLE:
         if comp < min(point_crois1,point_crois2) or comp > max(point_crois1,point_crois2):
-            enfant1.rot_table[doublet] = parent1.rot_table[doublet]
-            enfant2.rot_table[doublet] = parent2.rot_table[doublet]
+            enfant1.table.rot_table[doublet] = parent1.table.rot_table[doublet]
+            correspondent_doublet1 = enfant1.table.corr()[doublet]
+            enfant1.table.rot_table[correspondent_doublet1] = parent1.table.rot_table[correspondent_doublet1]
+            enfant1.table.rot_table[correspondent_doublet1][2] *= -1
+
+            enfant2.table.rot_table[doublet] = parent2.table.rot_table[doublet]
+            correspondent_doublet2 = enfant2.table.corr()[doublet]
+            enfant2.table.rot_table[correspondent_doublet2] = parent2.table.rot_table[correspondent_doublet2]
+            enfant2.table.rot_table[correspondent_doublet2][2] *= -1
+        
         else :
-            enfant1.rot_table[doublet] = parent2.rot_table[doublet]
-            enfant2.rot_table[doublet] = parent1.rot_table[doublet]
+            enfant1.table.rot_table[doublet] = parent2.table.rot_table[doublet]
+            correspondent_doublet1 = enfant1.table.corr()[doublet]
+            enfant1.table.rot_table[correspondent_doublet1] = parent2.table.rot_table[correspondent_doublet1]
+            enfant1.table.rot_table[correspondent_doublet1][2] *= -1
+
+            enfant2.table.rot_table[doublet] = parent1.table.rot_table[doublet]
+            correspondent_doublet2 = enfant2.table.corr()[doublet]
+            enfant2.table.rot_table[correspondent_doublet2] = parent1.table.rot_table[correspondent_doublet1]
+            enfant2.table.rot_table[correspondent_doublet2][2] *= -1
         comp += 1
     return enfant1, enfant2
+
+# parent1 = Individu(RotTable())
+# parent2 = Individu(RotTable())
+# print("parent1: ", parent1.table.rot_table)
+# print("parent2: ", parent2.table.rot_table)
+# enfant1, enfant2 = croisement_un_point(parent1, parent2)
+# print("enfant1: ", enfant1.table.rot_table)
+# print("enfant2: ", enfant2.table.rot_table)

@@ -65,3 +65,9 @@ class Traj3D:
         ax.plot(x,y,z)
         plt.show()
         plt.savefig(filename)
+
+# from RotTable import RotTable
+# table = RotTable()
+# test = Traj3D()
+# test.compute("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA", table)
+# test.draw("first_plot")
