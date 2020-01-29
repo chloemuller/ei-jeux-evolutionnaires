@@ -9,13 +9,12 @@ P1 = 0.015
 class Individu():
     ''' Un individu est caractérisé par sa table de rotations (individu.table)'''
     def __init__(self, table):
-        lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
-        brin = ''.join(lineList[1:])
         self.table = table
         lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
         self.brin = ''.join(lineList[1:])
         #self.brin = "AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA"
         self.score = None
+        self.distance = None
 
     def evaluate(self):
         ''' Evalue le score d'un individu sur un nombre numb_ajout de points'''
@@ -42,10 +41,10 @@ class Individu():
                 nuc_coordonate_end = end[i]
                 distance_nuc = np.linalg.norm(nuc_coordonate_beg - nuc_coordonate_end, ord=2)
                 list_distance += [distance_nuc]
-
+        
 
         self.score = max(list_distance)
-
+        self.distance = np.linalg.norm(traj_array[numb_ajout] - traj_array[-(numb_ajout+1)], ord=2)
         #return max(list_distance)
 
 
@@ -119,7 +118,7 @@ class Individu():
                 table_rotation_not_seen.remove(doublet)
 
                 for coord in range(3):
-                    value = table_rotations[doublet][coord] + np.random.normal(0, self.table.orta()[doublet][coord + 3]/15)
+                    value = table_rotations[doublet][coord] + np.random.normal(0, self.table.orta()[doublet][coord + 3]/10)
                     if value > self.table.orta()[doublet][coord] + self.table.orta()[doublet][coord + 3]:
                         value = self.table.orta()[doublet][coord] + self.table.orta()[doublet][coord + 3]
                     elif value < self.table.orta()[doublet][coord] - self.table.orta()[doublet][coord + 3]:

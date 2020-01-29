@@ -4,7 +4,7 @@ import numpy
 import RotTable
 from individu import Individu
 from population import Population, afficher
-from croisement import * 
+import croisement
 from Traj3D import *
 from random import random
 import matplotlib.pyplot as plt
@@ -12,46 +12,25 @@ import time
 from copy import deepcopy
 import csv
 
-# def main(N,tmax,pmutation, proportion,brin="plasmid_8k.fasta"):
-#     '''lineList = [line.rstrip('\n') for line in open(brin)]
-# 	brin = ''.join(lineList[1:])'''
-#     L=[]
-#     People=Population(N)
-#     for i in range(tmax):
-#         print(i)
-#         max=0
-#         best=None
-#         People.reproduction(p = proportion, proba_mutation= pmutation)
-#         for individu in People.indiv:
-#             if individu.score>max:
-#                 best=individu
-#                 max=individu.score
-#         L.append(max)
+# Debut du decompte du temps
+start_time = time.time()
 
-#     plt.plot([i for i in range(tmax)], L, label = str(pmutation))
-#     return(best)
 
 def main(N,tmax,pmutation, proportion, indice_selection, population_initiale, enfant = croisement_un_point):
     
     
     lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
     brin = ''.join(lineList[1:])
-    People=deepcopy(population_initiale)
-    # S1=[]
+    People=Population(N)
+    S1=[]
     for individu in People.indiv:
         individu.evaluate()
-        # S1.append(int(individu.score))
-    # maximum=int(max(S1))
-    mini=People.indiv[0].score
-    for individu in People.indiv:
-            if individu.score<mini:
-                mini=individu.score
-    L=[mini]
+        S1.append(int(individu.score))
+    maximum=int(max(S1))
     for i in range(tmax):
-        print(i)
-        People.reproduction(p = proportion, proba_mutation= pmutation, selection = indice_selection, enfant = enfant)
         mini=People.indiv[0].score
         best=People.indiv[0]
+        People.reproduction(p = proportion, proba_mutation= pmutation)
         for individu in People.indiv:
             if individu.score<mini:
                 best=individu
@@ -60,22 +39,24 @@ def main(N,tmax,pmutation, proportion, indice_selection, population_initiale, en
         S2=[individu.score for individu in People.indiv]
         avg = sum(S2)/len(S2)
         L.append(mini)
+        print(i,"avg:",avg,"best score:", mini)
 
     # plt.subplot(221)
     liste_selections = ["selection_p_best", "selection_duel_pondere", "selection_duel", "selection_par_rang"]
     #plt.plot([j for j in range(len(L))], L, label = liste_selections[indice_selection])
     
 
-    # plt.subplot(223)
-    # plt.hist(S1, range = (0, maximum+10), bins = 20, color = 'red')
+    plt.subplot(223)
+    plt.hist(S1, range = (0, maximum+10), bins = 20, color = 'red')
 
-    # S2=[individu.score for individu in People.indiv]
-    # print("Score final: ",best.score)
+    S2=[individu.score for individu in People.indiv]
+    print("Score final: ",best.score)
+    print("Distance finale: ", best.distance)
+    print("Avg:", sum(S2)/len(S2))
 
-
-    # plt.subplot(224)
-    # plt.hist(S2, range = (0,maximum+10), bins = 20, color = 'blue')
-    # plt.show()
+    plt.subplot(224)
+    plt.hist(S2, range = (0,maximum+10), bins = 20, color = 'blue')
+    plt.show()
    
 
     return(best,People)
