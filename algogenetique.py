@@ -33,7 +33,6 @@ def main(N,tmax,pmutation, proportion,brin="plasmid_8k.fasta"):
 
 
 best,People = main(100,100,0.01,50)
-test = Traj3D()
-test.compute("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA", best.table)
-test.draw("first_plot")
-
+traj = Traj3D()
+traj.compute(best.brin,best.table)
+traj.draw("plot")
