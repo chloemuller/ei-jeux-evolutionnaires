@@ -13,6 +13,7 @@ import time
 # Debut du decompte du temps
 start_time = time.time()
 
+#Les tests de temps ont été effectué avec 200 personnes, 50 survivant, 0.01 prob muté, 10 gen
 
 def main(N,tmax,pmutation, proportion):
     
@@ -21,21 +22,20 @@ def main(N,tmax,pmutation, proportion):
     brin = ''.join(lineList[1:])
     People=Population(N)
     S1=[]
-    for individu in People.indiv:
-        individu.evaluate()
+    for individu in People.indiv: #la boucle prend 8 secondes à faire en tout
+        individu.evaluate() #chaque appel coute 0.05 secondes 
         S1.append(int(individu.score))
     maximum=int(max(S1))
     for i in range(tmax):
         mini=People.indiv[0].score
         best=People.indiv[0]
-        People.reproduction(p = proportion, proba_mutation= pmutation)
+        People.reproduction(p = proportion, proba_mutation= pmutation) #La reproduction prend 7 secondes 
         for individu in People.indiv:
             if individu.score<mini:
                 best=individu
                 mini=individu.score
         L.append(mini)
         print(i,":",mini)
-
     plt.subplot(221)
     plt.plot([i for i in range(tmax)], L)
     
@@ -56,7 +56,7 @@ def main(N,tmax,pmutation, proportion):
 
 lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
 brin = ''.join(lineList[1:])
-best,People = main(200,10,0.01,100)
+best,People = main(200,10,0.01,50)
 test = Traj3D()
 test.compute(brin, best.table)
 test.draw("first_plot")

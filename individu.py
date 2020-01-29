@@ -3,6 +3,7 @@ from Traj3D import Traj3D
 import numpy as np
 from math import sqrt, inf
 from random import random, randrange
+import time
 
 P1 = 0.015
 
@@ -15,33 +16,33 @@ class Individu():
         lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
         self.brin = ''.join(lineList[1:])
         #self.brin = "AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA"
-        self.score = self.evaluate()
-    def evaluate(self):
+        self.score = None
+    def evaluate(self): #0.05 sec par individu
         traj = Traj3D()
 
         numb_ajout = 6
 
         fisrt_seq = self.brin[0:numb_ajout]
         last_seq = self.brin[-numb_ajout:]
+        traj.compute(last_seq + self.brin + fisrt_seq, self.table) #0.015
 
-        traj.compute(last_seq + self.brin + fisrt_seq, self.table)
-        traj_array = np.array(traj.getTraj())
+        test_start = time.time()
+        traj_array = traj.getTraj() #Instantannée
+        test_end = time.time()
+        print(test_end - test_start)
 
         list_distance = []
 
-        begining = traj_array[0:2*numb_ajout, 0:3]
-        end = traj_array[-2*numb_ajout:, 0:3]
-
-        for i in range(numb_ajout):
+        begining = traj_array[0:2*numb_ajout]
+        end = traj_array[-2*numb_ajout:]
+        for i in range(numb_ajout): #Instantannée
 
                 nuc_coordonate_beg = begining[i]
                 nuc_coordonate_end = end[i]
                 distance_nuc = np.linalg.norm(nuc_coordonate_beg - nuc_coordonate_end, ord=2)
                 list_distance += [distance_nuc]
 
-
         self.score = max(list_distance)
-
         #return max(list_distance)
 
 
@@ -72,24 +73,6 @@ class Individu():
             for coord in range(3):
                 tir = random()
                 if tir < proba :
-                    table_rotations[doublet][coord] =np.random.uniform(low = self.table.orta()[doublet][coord] - self.table.orta()[doublet][coord + 3], high = self.table.orta()[doublet][coord] + self.table.orta()[doublet][coord + 3])
-                    doublet2 = self.table.corr()[doublet]
-                    if coord == 0 or coord == 1 :
-                        table_rotations[doublet2][coord] = table_rotations[doublet][coord]
-                    else :
-                        #sur l'axe z il y a un moins
-                        table_rotations[doublet2][coord] = - table_rotations[doublet][coord]
-        table_rotations = self.table.rot_table
-        for i in range(0,number_of_mutations):
-            tir = random()
-            if tir < proba :
-                doubletNumber = randrange(0,8)
-                counter = 0
-                for doublet in table_rotations:
-                    if counter==doubletNumber:
-                        break
-                    counter+=1
-                for coord in range(3):
                     table_rotations[doublet][coord] =np.random.uniform(low = self.table.orta()[doublet][coord] - self.table.orta()[doublet][coord + 3], high = self.table.orta()[doublet][coord] + self.table.orta()[doublet][coord + 3])
                     doublet2 = self.table.corr()[doublet]
                     if coord == 0 or coord == 1 :

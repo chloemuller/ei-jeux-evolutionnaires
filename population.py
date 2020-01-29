@@ -3,6 +3,7 @@ from individu import Individu
 from RotTable import RotTable
 from croisement import croisement_un_point, croisement_deux_points
 import copy
+import time
 
 class Population:
     def __init__(self,n):
@@ -154,19 +155,19 @@ class Population:
         if p == None :
             p = (self.n)//2
         vieille_taille = self.n
-        selection(p)
-        newself = [element for element in self.indiv]       
-        while len(newself)<vieille_taille:
+        selection(p) #Instantannée
+        newself = [element for element in self.indiv]   
+        while len(newself)<vieille_taille: #Cette boucle prend 6-7 sec
             m=randrange(0,self.n)
             t=randrange(0,self.n)
             x=copy.deepcopy(newself[m])
             y=copy.deepcopy(newself[t])
             couple_enfant = enfant(x,y)
-            for child in couple_enfant :
+            for child in couple_enfant : #Cette boucle prend 0.1 sec
                 lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
                 brin = ''.join(lineList[1:])
-                child.mutation(proba_mutation)
-                child.evaluate()
+                child.mutation(proba_mutation) #Instannée
+                child.evaluate() # 0.05 par child <-- C'est ce qui ralenti le tout
             newself.append(couple_enfant[0])
             newself.append(couple_enfant[1])
         self = self.modifier_population(newself)
