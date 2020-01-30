@@ -60,7 +60,7 @@ def main(N,tmax,pmutation, proportion):
 
 lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
 brin = ''.join(lineList[1:])
-best,People = main(100,10,0.05,10)
+best,People = main(10,1000,0.05,5)
 test = Traj3D()
 test.compute(brin, best.table)
 test.draw("first_plot")
