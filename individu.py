@@ -57,6 +57,7 @@ class Individu():
 
 
     def mutation(self, proba = P1):
+        # each dinucleotide has a probability "proba" to mutate
         table_rotations = self.table.rot_table
         for doublet in sorted(table_rotations.keys()) :
             for coord in range(3):
@@ -71,6 +72,8 @@ class Individu():
                         table_rotations[doublet2][coord] = - table_rotations[doublet][coord]
 
     def mutation_with_numbers(self, proba = P1, number_of_mutations = 1):
+        # each individual has a probability "proba" to be mutated
+        # if it mutates, then a number "number_of_mutations" of chromosomes will be randomly mutated
         table_rotations = self.table.rot_table
         table_rotation_not_seen = [i for i in sorted(table_rotations.keys())]
         table_rotation_not_seen = table_rotation_not_seen[:8]
@@ -93,6 +96,9 @@ class Individu():
 
 
     def mutation_close_values(self, proba = P1, number_of_mutations = 1):
+        # each individual has a probability "proba" to be mutated
+        # if it mutates, then a number "number_of_mutations" of chromosomes will be randomly mutated
+        # according to the normal distribution around the current value of the dinucleotide
         table_rotations = self.table.rot_table
         table_rotation_not_seen = [i for i in sorted(table_rotations.keys())]
         table_rotation_not_seen = table_rotation_not_seen[:8]
