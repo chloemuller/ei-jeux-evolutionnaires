@@ -2,12 +2,12 @@ import numpy
 from RotTable import RotTable
 from individu import Individu
 
-def croisement_un_point(parent1, parent2):
+def croisement_un_point(parent1, parent2, filename):
     '''Croise les tables de rotation des parents pour former deux enfants en respectant les symétries du problème'''
     ''' Retourne deux enfants'''
 
-    enfant1 = Individu(RotTable())
-    enfant2 = Individu(RotTable())
+    enfant1 = Individu(RotTable(), filename)
+    enfant2 = Individu(RotTable(), filename)
     comp = 0
     point_crois= numpy.random.random_integers(0,8)
     list_dinucleotides = sorted(RotTable().orta())
@@ -45,12 +45,12 @@ def croisement_un_point(parent1, parent2):
     return enfant1, enfant2
 
 
-def croisement_deux_points(parent1, parent2):
+def croisement_deux_points(parent1, parent2, filename):
     ''' Croise les tables de rotationd des deux parents en croisant à deux points et respectant les symétries du problème'''
     ''' Retourne deux enfants'''
 
-    enfant1 = Individu(RotTable())
-    enfant2 = Individu(RotTable())
+    enfant1 = Individu(RotTable(), filename)
+    enfant2 = Individu(RotTable(), filename)
     comp = 0
     point_crois1= numpy.random.random_integers(0,8)
     point_crois2= numpy.random.random_integers(0,8)

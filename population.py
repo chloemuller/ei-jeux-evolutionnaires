@@ -10,8 +10,9 @@ class Population:
 
 
     #Class initialization
-    def __init__(self,n):
-        self.indiv=[Individu(RotTable()) for k in range (n)]
+    def __init__(self,n,filename):
+        self.filename = filename
+        self.indiv=[Individu(RotTable(), self.filename) for k in range (n)]
         self.n = n
     
     #Updates the current individuals in the population  
@@ -132,7 +133,7 @@ class Population:
         if proba_mutation == None :
             proba_mutation = 0.001
         if selection == None :
-            selection = self.selection_duel
+            selection = self.selection_par_rang
         else :
             selection = liste_selections[selection]
         if p == None :
@@ -150,7 +151,7 @@ class Population:
             y=copy.deepcopy(newself[t])
 
             #Creation of the childs
-            couple_enfant = enfant(x,y)
+            couple_enfant = enfant(x,y, self.filename)
             for child in couple_enfant :
                 child.mutation_close_values(proba_mutation, number_of_mutations = 2)
                 child.evaluate()

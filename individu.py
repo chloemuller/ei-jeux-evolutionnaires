@@ -9,12 +9,10 @@ P1 = 0.015
 class Individu():
     ''' Un individu est caractérisé par sa table de rotations (individu.table)'''
     
-    def __init__(self, table):
+    def __init__(self, table, filename):
         self.table = table
-        lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
+        lineList = [line.rstrip('\n') for line in open(filename)]
         self.brin = ''.join(lineList[1:])
-        #self.brin = "AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA"
-        # (sequence used for test)
         self.score = None
         self.distance = None
 

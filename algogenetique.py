@@ -14,10 +14,10 @@ import time
 start_time = time.time()
 
 
-def main(N,tmax,pmutation, proportion):
+def main(N,tmax,pmutation, proportion, filename):
     
     #Creation of the initial population
-    People=Population(N)
+    People=Population(N, filename)
     L=[]
 
     #Evaluating the initial population for the histogram
@@ -72,7 +72,7 @@ def main(N,tmax,pmutation, proportion):
 #Testing our solution and printing the result in 3D
 lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
 brin = ''.join(lineList[1:])
-best,People = main(10,1000,0.05,5)
+best,People = main(100,10,0.1,5, "plasmid_8k.fasta")
 test = Traj3D()
 test.compute(brin, best.table)
 test.draw("first_plot")
