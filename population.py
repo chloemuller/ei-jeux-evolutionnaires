@@ -4,7 +4,10 @@ from RotTable import RotTable
 from croisement import croisement_un_point, croisement_deux_points
 import copy
 
+
 class Population:
+    '''A class of the ensemble of individuals and the methods associated with them,such as reproduction and different types of selections'''
+
 
     #Class initialization
     def __init__(self,n):

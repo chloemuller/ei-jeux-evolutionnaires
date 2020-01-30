@@ -15,14 +15,10 @@ start_time = time.time()
 
 
 def main(N,tmax,pmutation, proportion):
-
-    #Setting up initial variables
-    L=[]
-    lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
-    brin = ''.join(lineList[1:])
-
+    
     #Creation of the initial population
     People=Population(N)
+    L=[]
 
     #Evaluating the initial population for the histogram
     S1=[]
