@@ -76,8 +76,8 @@ def main(N,tmax,pmutation, proportion):
 #Testing our solution and printing the result in 3D
 lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
 brin = ''.join(lineList[1:])
-best,People = main(60,60,0.05,30)
-test = Traj3D()
-test.compute(brin, best.table)
-test.draw("first_plot")
+best,People = main(30,5,0.05,15)
+traj = Traj3D()
+traj.compute(brin, best.table)
+traj.draw("first_plot")
 print("Temps d'execution : %s secondes " % (time.time() - start_time))
