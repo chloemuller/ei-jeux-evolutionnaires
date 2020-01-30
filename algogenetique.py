@@ -24,7 +24,7 @@ def main(N,tmax,pmutation, proportion):
     #Creation of the initial population
     People=Population(N)
 
-    #Avaliating the initial population
+    #Evaluating the initial population for the histogram
     S1=[]
     for individu in People.indiv:
         individu.evaluate()
@@ -55,6 +55,7 @@ def main(N,tmax,pmutation, proportion):
     plt.subplot(221)
     plt.plot([i for i in range(tmax)], L)
 
+    #Graph of the original population
     plt.subplot(223)
     plt.hist(S1, range = (0, maximum+10), bins = 20, color = 'red')
 
@@ -63,6 +64,7 @@ def main(N,tmax,pmutation, proportion):
     print("Distance finale: ", best.distance)
     print("Avg:", sum(S2)/len(S2))
 
+    #Graph of the final population
     plt.subplot(224)
     plt.hist(S2, range = (0,maximum+10), bins = 20, color = 'blue')
     plt.show()
