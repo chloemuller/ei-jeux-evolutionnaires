@@ -13,21 +13,28 @@ class Individu():
         lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
         self.brin = ''.join(lineList[1:])
         #self.brin = "AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA"
+        # (sequence used for test)
         self.score = None
         self.distance = None
 
     def evaluate(self):
         ''' Evalue le score d'un individu sur un nombre numb_ajout de points'''
-        
+        # The last numb_ajout dinucleotides of the "ribbon" are joined at its beginning,
+        # and the first numb_ajout dinucleotides are joined at the end of it.
+        # This "new parts" of the sequence will be compared with the real beginning and end of the the ribbon.
+        # If they coincide, then the chromosome is circular
         
         traj = Traj3D()
 
+        # number of dinucleotides which will be compared
         numb_ajout = 10
 
-        fisrt_seq = self.brin[0:numb_ajout]
+        # the first and the last numb_ajout dinucleotides respectively
+        first_seq = self.brin[0:numb_ajout]
         last_seq = self.brin[-numb_ajout:]
 
-        traj.compute(last_seq + self.brin + fisrt_seq, self.table)
+        # creation of the "new ribbon"
+        traj.compute(last_seq + self.brin + first_seq, self.table)
         traj_array = traj.getTraj()
 
         list_distance = []
@@ -35,6 +42,8 @@ class Individu():
         begining = traj_array[0:2*numb_ajout]
         end = traj_array[-2*numb_ajout:]
 
+        # score calculation, comparing the new ribbon with the real sequence,
+        # according to the distance of the correspondent dinucleotides
         for i in range(numb_ajout):
 
                 nuc_coordonate_beg = begining[i]
@@ -45,7 +54,6 @@ class Individu():
 
         self.score = max(list_distance)
         self.distance = np.linalg.norm(traj_array[numb_ajout] - traj_array[-(numb_ajout+1)], ord=2)
-        #return max(list_distance)
 
 
     def mutation(self, proba = P1):
@@ -110,18 +118,3 @@ class Individu():
                     else :
                         #sur l'axe z il y a un moins
                         table_rotations[doublet2][coord] = - table_rotations[doublet][coord]
-
-# individu1 = Individu(RotTable())
-# print(individu1.table.rot_table)
-# individu1.mutation()
-
-# table = RotTable()
-# test = Individu(table)
-# test.evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
-# print(test.score)
-
-
-# qqun=Individu(RotTable())
-# qqun.table.rot_table={'AA': [35.576558502141, 7.433901511509349, -154], 'AC': [33.22048222654215, 5.25191751302917, 143], 'AG': [26.446029097301288, 6.052240462237622, -2], 'AT': [30.47045254036881, 1.333716025628036, 0], 'CA': [34.00734209585039, 33.70710613604862, -64], 'CC': [33.61019622767888, 3.713127032109607, -57], 'CG': [29.664061041382677, 6.725155507162601, 0], 'CT': [26.446029097301288, 6.052240462237622, 2], 'GA': [36.655773481637176, 10.45337581740701, 120], 'GC': [42.26984493493484, 3.5310453395352823, 180], 'GG': [33.61019622767888, 3.713127032109607, -57], 'GT': [33.22048222654215, 5.25191751302917, 143], 'TA': [36.951508786388914, -2.5174751178033303, 0], 'TC': [36.655773481637176, 10.45337581740701, -120], 'TG': [34.00734209585039, 33.70710613604862, -64], 'TT': [35.576558502141, 7.433901511509349, -154]}
-# qqun.evaluate("AAAGGATCTTCTTGAGATCCTTTTTTTCTGCGCGTAATCTGCTGCCAGTAAACGAAAAAACCGCCTGGGGAGGCGGTTTAGTCGAA")
-# print(qqun.score)
