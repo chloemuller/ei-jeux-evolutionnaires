@@ -133,7 +133,7 @@ class Population:
         if proba_mutation == None :
             proba_mutation = 0.001
         if selection == None :
-            selection = self.selection_duel
+            selection = self.selection_par_rang
         else :
             selection = liste_selections[selection]
         if p == None :
