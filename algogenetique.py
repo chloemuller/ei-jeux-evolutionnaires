@@ -16,50 +16,54 @@ import csv
 start_time = time.time()
 
 
-def main(N,tmax,pmutation, proportion, indice_selection, population_initiale, enfant = croisement_un_point):
-    
+def main(N,tmax,pmutation, proportion, indice_selection, population_initiale):
     
     lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
     brin = ''.join(lineList[1:])
-    People=Population(N)
-    S1=[]
+    People=deepcopy(population_initiale)
+    # S1=[]
     for individu in People.indiv:
         individu.evaluate()
-        S1.append(int(individu.score))
-    maximum=int(max(S1))
+        # S1.append(int(individu.score))
+    # maximum=int(max(S1))
+    mini=People.indiv[0].score
+    for individu in People.indiv:
+            if individu.score<mini:
+                mini=individu.score
+    # L=[mini]
     for i in range(tmax):
+        print(i)
+        People.reproduction(p = proportion, proba_mutation= pmutation, selection = indice_selection)
         mini=People.indiv[0].score
         best=People.indiv[0]
-        People.reproduction(p = proportion, proba_mutation= pmutation)
         for individu in People.indiv:
             if individu.score<mini:
                 best=individu
                 mini=individu.score
         
-        S2=[individu.score for individu in People.indiv]
-        avg = sum(S2)/len(S2)
-        L.append(mini)
-        print(i,"avg:",avg,"best score:", mini)
+        # S2=[individu.score for individu in People.indiv]
+        # avg = sum(S2)/len(S2)
+        # L.append(mini)
 
     # plt.subplot(221)
-    liste_selections = ["selection_p_best", "selection_duel_pondere", "selection_duel", "selection_par_rang"]
-    #plt.plot([j for j in range(len(L))], L, label = liste_selections[indice_selection])
+    # liste_selections = ["selection_p_best", "selection_duel_pondere", "selection_duel", "selection_par_rang", "selection_proportionnelle"]
+    # plt.plot([j for j in range(len(L))], L, label = liste_selections[indice_selection])
     
 
-    plt.subplot(223)
-    plt.hist(S1, range = (0, maximum+10), bins = 20, color = 'red')
+    # plt.subplot(223)
+    # plt.hist(S1, range = (0, maximum+10), bins = 20, color = 'red')
 
-    S2=[individu.score for individu in People.indiv]
-    print("Score final: ",best.score)
-    print("Distance finale: ", best.distance)
-    print("Avg:", sum(S2)/len(S2))
+    # S2=[individu.score for individu in People.indiv]
+    # print("Score final: ",best.score)
 
-    plt.subplot(224)
-    plt.hist(S2, range = (0,maximum+10), bins = 20, color = 'blue')
-    plt.show()
+
+    # plt.subplot(224)
+    # plt.hist(S2, range = (0,maximum+10), bins = 20, color = 'blue')
+    # plt.show()
    
 
     return(best,People)
+
 
 # lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
 # brin = ''.join(lineList[1:])
@@ -85,24 +89,27 @@ def compare_mutation():
 
 
 def comparaison_selections(N,generation,mut,surv):
-    liste_selections = ["selection_p_best", "selection_duel_pondere", "selection_par_rang", "selection_proportionnelle", "selection_duel"]
+    liste_selections = ["selection_p_best", "selection_par_rang", "selection_proportionnelle", "selection_duel", "selection_duel_pondere"]
     liste_time = []
-    plt.figure()
+    #plt.figure()
     People = Population(N)
     for individu in People.indiv:
         individu.evaluate()
-    S2=[individu.score for individu in People.indiv]
+    #S2=[individu.score for individu in People.indiv]
     #plt.hist(S2, range = (0,int(max(S2)+10)), bins = 20, color = 'blue')
     #plt.show()
     #plt.figure()
     for i in range(3):
-        print("\n", liste_selections[i], "\n")
+        #print("\n", liste_selections[i], "\n")
         start_time = time.time()
         best = main(N, generation, mut, surv, i, deepcopy(People))[0]
         liste_time.append(",{},{},{},{},{},{},{},".format(liste_selections[i], time.time() - start_time, best.score,N,generation,mut,sur))
     start_time = time.time()
-    best = main(N, generation, mut, surv/2, 4, deepcopy(People))[0]
-    liste_time.append(",{},{},{},{},{},{},{},".format(liste_selections[4], time.time() - start_time, best.score,N,generation,mut,sur))
+    best = main(N, generation, mut, int(surv/2), 3, deepcopy(People))[0]
+    liste_time.append(",{},{},{},{},{},{},{},".format(liste_selections[3], time.time() - start_time, best.score,N,generation,mut,int(sur/2)))
+    start_time = time.time()
+    best = main(N, generation, mut, int(surv/2), 4, deepcopy(People))[0]
+    liste_time.append(",{},{},{},{},{},{},{},".format(liste_selections[4], time.time() - start_time, best.score,N,generation,mut,int(sur/2)))
     #plt.legend()
     #plt.xlabel("Nombre de générations")
     #plt.ylabel("Score du meilleur individu")
@@ -133,7 +140,7 @@ with open("Comparaison.csv","w",newline='') as csvfichier:
             sur = int(element * indiv)
             Result = comparaison_selections(indiv,nb_gen,mut,sur)
             for res in Result:
-                print(res)
+                #print(res)
                 spamwriter.writerow([res])
 
 # [['selection_p_best' '22.637820959091187' '116.30569654472626']

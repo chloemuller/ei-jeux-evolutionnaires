@@ -117,7 +117,8 @@ class Population:
         self = self.modifier_population(newself)
 
     def reproduction(self,proba_mutation = None, selection=None,enfant=croisement_un_point, p = None):
-        liste_selections = [self.selection_p_best, self.selection_duel_pondere, self.selection_duel, self.selection_par_rang, self.selection_proportionnelle]
+        #liste_selections = ["selection_p_best", "selection_par_rang", "selection_proportionnelle", "selection_duel", "selection_duel_pondere"]
+        liste_selections = [self.selection_p_best, self.selection_par_rang, self.selection_proportionnelle, self.selection_duel, self.selection_duel_pondere]
         if proba_mutation == None :
             proba_mutation = 0.001
         if selection == None :
