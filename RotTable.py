@@ -5,6 +5,7 @@ import numpy
 class RotTable:
     """Represents the rotation table"""
 
+    #The standart Rotation table given by the base problem
     __ORIGINAL_ROT_TABLE = {\
         "AA": [35.62, 7.2, -154, 0.06, 0.6, 0],\
         "AC": [34.4, 1.1, 143, 1.3, 5, 0],\
@@ -24,6 +25,7 @@ class RotTable:
         "TT": [35.62, 7.2, 154, 0.06, 0.6, 0]\
         }
 
+    #The table that indicates what dinucleotides have dependent angles
     __CORRESPONDANCE = {\
         "AA": "TT",\
         "AC": "GT",\
@@ -55,6 +57,11 @@ class RotTable:
         "GC": "GC",\
         "TA": "TA"\
         }
+
+    ###################
+    # WRITING METHODS #
+    ###################
+
     # get the angles in each axis (x, y, z), considering the deviation
     def __init__(self):
         self.rot_table = {}
@@ -67,6 +74,7 @@ class RotTable:
     def alea(self):
         for dinucleotide in RotTable.__SOUS_CORRESPONDANCE:
             for i in range(2):
+                #We use a unifor distribution along the desired values
                 delta = numpy.random.uniform(low = -RotTable.__ORIGINAL_ROT_TABLE[dinucleotide][i+3], high= RotTable.__ORIGINAL_ROT_TABLE[dinucleotide][i+3])
                 self.rot_table[dinucleotide][i] += delta
                 self.rot_table[RotTable.__SOUS_CORRESPONDANCE[dinucleotide]][i] += delta
@@ -78,9 +86,6 @@ class RotTable:
     def corr(self):
         return self.__CORRESPONDANCE
 
-    ###################
-    # WRITING METHODS #
-    ###################
     #table = RotTable()
     #table.rot_table["AA"] --> [35.62, 7.2, -154]
 
@@ -99,7 +104,3 @@ class RotTable:
 
     ###################
 
-#table1 = RotTable()
-#print(table1.orta())
-
-# print(table1.rot_table)
