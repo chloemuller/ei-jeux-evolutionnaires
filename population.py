@@ -95,12 +95,10 @@ class Population:
     
         for _ in range(p-1):
             curseur = random()*n*(n+1)/2
-            # print("curseur", curseur)
             j = 1
             while j*(j+1)/2 < curseur :
                 j+=1 
             #on doit prendre l'individu avec le jème score 
-            # print("individus selectionés", individus_selectionnes)
             individus_selectionnes.append(liste_individus[j-1])
         
         self = self.modifier_population(individus_selectionnes)
@@ -164,7 +162,6 @@ class Population:
 def afficher(popu):
     for individu in popu.indiv :
         print("\n individu \n")
-        # print(individu.table.rot_table)
         print ("score", individu.score)
 
 

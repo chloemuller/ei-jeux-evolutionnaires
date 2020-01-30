@@ -8,6 +8,7 @@ P1 = 0.015
 
 class Individu():
     ''' Un individu est caractérisé par sa table de rotations (individu.table)'''
+    
     def __init__(self, table):
         self.table = table
         lineList = [line.rstrip('\n') for line in open("plasmid_8k.fasta")]
